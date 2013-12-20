@@ -14,11 +14,14 @@
 
 using namespace sf;
 
-class Entity : public sf::Drawable {
+class Entity : public sf::Drawable
+{
 	
 public:
+	virtual void update();
+	
 	Vector2f velocity;
-	Vector2i position;
+	Vector2f position;
 	Rect<int> boundingBox;
 	Sprite sprite;
 	

@@ -15,16 +15,22 @@
 
 using namespace sf;
 
-class Game {
+class Game
+{
 	
 public:
 	RenderWindow* window;
-	std::vector<Entity> entityList;
+	std::vector<Entity*> entityList;
 	
 	Game(RenderWindow* window);
 	void setup();
 	void run ();
-	void createPlayer();
+ 	void createPlayer();
+	
+private:
+	Player* p1;
+	void cleanup();
+	
 };
 
 #endif /* defined(__Broccolaser__Game__) */

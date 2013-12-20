@@ -29,13 +29,22 @@ void Game::setup()
 void Game::createPlayer()
 {
 	Vector2f velocity(0,0);
-	Vector2i position(20,20);
+	Vector2f position(20,20);
 	Texture texture;
 	texture.loadFromFile(resourcePath() + "cute_image.jpg");
-	Rect<int> boundingBox(position, Vector2i(20,60));
+	Rect<int> boundingBox((Vector2i)position, Vector2i(20,60));
 	Sprite sprite(texture, boundingBox);
-	Player player = Player(velocity, position, boundingBox, sprite);
+	Player* player = new Player(velocity, position, boundingBox, sprite);
 	entityList.push_back(player);
+	p1 = player;
+}
+void Game::cleanup()
+{
+	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
+	for (Entity* entity : entityList)
+	{
+		delete entity;
+	}
 }
 
 void Game::run ()
@@ -48,24 +57,30 @@ void Game::run ()
         while (window->pollEvent(event))
         {
             // Close window : exit
-            if (event.type == Event::Closed) {
+            if (event.type == Event::Closed)
+			{
                 window->close();
             }
 			
             // Espace pressed : exit
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+			{
                 //open menu
             }
         }
         // Clear screen
         window->clear();
 		
-		for (Entity entity : entityList)
+		for (Entity* entity : entityList)
 		{
-			window->draw(entity);
+			entity->update();
+			window->draw(*entity);
+
 		}
 		
         // Update the window
         window->display();
     }
+	
+	cleanup();
 }

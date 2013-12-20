@@ -14,12 +14,19 @@
 
 using namespace sf;
 
-class Player : public Entity{
+class Player : public Entity
+{
 	
 	
 public:
-	Player(Vector2f velocity, Vector2i position, Rect<int> boundingBox, Sprite sprite);
+	Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite);
+	~Player();
 
+	void update();
+
+private:
+	void handleKeyboard();
+	
 };
 
 #endif /* defined(__Broccolaser__Player__) */
