@@ -4,7 +4,8 @@
 #include "ResourcePath.hpp"
 #include "Game.h"
 
-//This file ONLY knows about the window, it should not know anything about the game other than there is one to be run
+//This file runs the game and manages the window
+//it should have no game logic
 
 using namespace sf;
 
@@ -53,6 +54,10 @@ int main(int, char const**)
 	//create the game object
 	Game game(&window);
 	
+	//in the future, this will be called by the menu
+	game.setup();
+	
+	//run the game, its a myster what this does, at least as far as this file goes
 	game.run();
     
     return EXIT_SUCCESS;

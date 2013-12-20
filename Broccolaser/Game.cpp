@@ -7,10 +7,12 @@
 // The game class will be the go-between from game knowledge to screen knowledge
 // it will include sfml stuff as well as game objects.
 // draw loop happens here
-// contains a list of drawables
+// contains a list of Entities
 
 #include <SFML/Graphics.hpp>
+#include <assert.h>
 
+#include "ResourcePath.hpp"
 #include "Game.h"
 
 Game::Game(RenderWindow* w)
@@ -18,8 +20,26 @@ Game::Game(RenderWindow* w)
 	window = w;
 }
 
-void Game::run ()
+void Game::setup()
 {
+	//lets create a player
+	createPlayer();
+}
+
+void Game::createPlayer()
+{
+	Vector2f velocity(0,0);
+	Vector2i position(20,20);
+	Texture texture;
+	texture.loadFromFile(resourcePath() + "cute_image.jpg");
+	Rect<int> boundingBox(position, Vector2i(20,60));
+	Sprite sprite(texture, boundingBox);
+	Player player = Player(velocity, position, boundingBox, sprite);
+	entityList.push_back(player);
+}
+
+void Game::run ()
+{	
 	// Start the game loop
     while (window->isOpen())
     {
@@ -34,12 +54,16 @@ void Game::run ()
 			
             // Espace pressed : exit
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
-                window->close();
+                //open menu
             }
         }
-		
         // Clear screen
         window->clear();
+		
+		for (Entity entity : entityList)
+		{
+			window->draw(entity);
+		}
 		
         // Update the window
         window->display();

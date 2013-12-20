@@ -10,15 +10,21 @@
 #define __Broccolaser__Game__
 
 #include <iostream>
+#include "Entity.h"
+#include "Player.h"
 
 using namespace sf;
 
 class Game {
-	RenderWindow* window;
 	
 public:
+	RenderWindow* window;
+	std::vector<Entity> entityList;
+	
 	Game(RenderWindow* window);
+	void setup();
 	void run ();
+	void createPlayer();
 };
 
 #endif /* defined(__Broccolaser__Game__) */

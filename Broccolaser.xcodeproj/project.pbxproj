@@ -14,6 +14,8 @@
 		917D61731862C48D00401CAC /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 917D61721862C48D00401CAC /* sansation.ttf */; };
 		917D61751862C48D00401CAC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 917D61741862C48D00401CAC /* icon.png */; };
 		917D617D1862D65A00401CAC /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D617B1862D65A00401CAC /* Game.cpp */; };
+		917D618018638C9600401CAC /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D617E18638C9600401CAC /* Entity.cpp */; };
+		917D61831863D8FB00401CAC /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D61811863D8FB00401CAC /* Player.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,10 @@
 		917D61741862C48D00401CAC /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		917D617B1862D65A00401CAC /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		917D617C1862D65A00401CAC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		917D617E18638C9600401CAC /* Entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
+		917D617F18638C9600401CAC /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		917D61811863D8FB00401CAC /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		917D61821863D8FB00401CAC /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,10 @@
 				917D616A1862C48D00401CAC /* ResourcePath.hpp */,
 				917D616B1862C48D00401CAC /* main.cpp */,
 				917D617B1862D65A00401CAC /* Game.cpp */,
+				917D617E18638C9600401CAC /* Entity.cpp */,
+				917D61811863D8FB00401CAC /* Player.cpp */,
+				917D61821863D8FB00401CAC /* Player.h */,
+				917D617F18638C9600401CAC /* Entity.h */,
 				917D617C1862D65A00401CAC /* Game.h */,
 				917D616D1862C48D00401CAC /* Resources */,
 				917D61661862C48D00401CAC /* Supporting Files */,
@@ -174,6 +184,8 @@
 				917D61691862C48D00401CAC /* ResourcePath.mm in Sources */,
 				917D616C1862C48D00401CAC /* main.cpp in Sources */,
 				917D617D1862D65A00401CAC /* Game.cpp in Sources */,
+				917D618018638C9600401CAC /* Entity.cpp in Sources */,
+				917D61831863D8FB00401CAC /* Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
