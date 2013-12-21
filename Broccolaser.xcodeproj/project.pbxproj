@@ -16,6 +16,8 @@
 		917D617D1862D65A00401CAC /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D617B1862D65A00401CAC /* Game.cpp */; };
 		917D618018638C9600401CAC /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D617E18638C9600401CAC /* Entity.cpp */; };
 		917D61831863D8FB00401CAC /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D61811863D8FB00401CAC /* Player.cpp */; };
+		917D61A718663A1000401CAC /* DirtBlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 917D61A618663A1000401CAC /* DirtBlock.png */; };
+		917D61A9186641C900401CAC /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = 917D61A8186641C900401CAC /* Player.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		917D617F18638C9600401CAC /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		917D61811863D8FB00401CAC /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		917D61821863D8FB00401CAC /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		917D61A618663A1000401CAC /* DirtBlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DirtBlock.png; sourceTree = "<group>"; };
+		917D61A8186641C900401CAC /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,8 @@
 		917D616D1862C48D00401CAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				917D61A8186641C900401CAC /* Player.png */,
+				917D61A618663A1000401CAC /* DirtBlock.png */,
 				917D616E1862C48D00401CAC /* cute_image.jpg */,
 				917D61701862C48D00401CAC /* nice_music.ogg */,
 				917D61721862C48D00401CAC /* sansation.ttf */,
@@ -155,6 +161,8 @@
 				917D61711862C48D00401CAC /* nice_music.ogg in Resources */,
 				917D61731862C48D00401CAC /* sansation.ttf in Resources */,
 				917D61751862C48D00401CAC /* icon.png in Resources */,
+				917D61A718663A1000401CAC /* DirtBlock.png in Resources */,
+				917D61A9186641C900401CAC /* Player.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,16 +24,18 @@ void Game::setup()
 {
 	//lets create a player
 	createPlayer();
+	
+	//cool idea: if we can save a level as a a file, we can read form that and programatically create the level
 }
 
 void Game::createPlayer()
 {
 	Vector2f velocity(0,0);
-	Vector2f position(20,20);
-	Texture texture;
-	texture.loadFromFile(resourcePath() + "cute_image.jpg");
-	Rect<int> boundingBox((Vector2i)position, Vector2i(20,60));
-	Sprite sprite(texture, boundingBox);
+	Vector2f position(0,0);
+	Texture* texture = new Texture();
+	texture->loadFromFile(resourcePath() + "Player.png");
+	Rect<int> boundingBox((Vector2i)position, (Vector2i)texture->getSize());
+	Sprite sprite(*texture, boundingBox);
 	Player* player = new Player(velocity, position, boundingBox, sprite);
 	entityList.push_back(player);
 	p1 = player;
@@ -52,7 +54,7 @@ void Game::run ()
 	// Start the game loop
     while (window->isOpen())
     {
-        // Process events
+        // Process events, if we have too many events here, then we need an event handler class or funciton or something
         Event event;
         while (window->pollEvent(event))
         {
@@ -69,7 +71,7 @@ void Game::run ()
             }
         }
         // Clear screen
-        window->clear();
+        window->clear(Color(255,255,255,255)); // background color = white
 		
 		for (Entity* entity : entityList)
 		{

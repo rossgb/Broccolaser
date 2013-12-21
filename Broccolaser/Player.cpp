@@ -4,9 +4,17 @@
 //
 //  Created by Ross Gordon-Baker on 2013-12-19.
 //
-//
+// this is what the user controls, the player inherits from entity, and adds functionality to
+// handle keyboard input
 
 #include "Player.h"
+
+
+//later if we want to change the controls programatically, we should turn this into an enum
+#define LEFT Keyboard::isKeyPressed(Keyboard::A)
+#define RIGHT Keyboard::isKeyPressed(Keyboard::S)
+#define UP Keyboard::isKeyPressed(Keyboard::W)
+#define DOWN Keyboard::isKeyPressed(Keyboard::R)
 
 using namespace sf;
 
@@ -28,23 +36,20 @@ void Player::update()
 
 void Player::handleKeyboard()
 {
-	if (Keyboard::isKeyPressed(Keyboard::A))
+	if (LEFT)
 	{
-		//go left
 		velocity.x = -1;
-	} else if (Keyboard::isKeyPressed(Keyboard::S))
+	} else if (RIGHT)
 	{
-		//go right
 		velocity.x = 1;
 	} else{
 		velocity.x = 0;
 	}
 	
-	if (Keyboard::isKeyPressed(Keyboard::W))
+	if (UP)
 	{
-		//go up
 		velocity.y = -1;
-	} else if (Keyboard::isKeyPressed(Keyboard::R))
+	} else if (DOWN)
 	{
 		velocity.y = 1;
 	} else{
