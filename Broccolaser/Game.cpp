@@ -15,6 +15,8 @@
 #include "ResourcePath.hpp"
 #include "Game.h"
 
+#define DEVELOPER true
+
 Game::Game(RenderWindow* w)
 {
 	window = w;
@@ -25,6 +27,16 @@ void Game::setup()
 	//lets create a player
 	createPlayer();
 	
+	createBackground();
+	
+	if (DEVELOPER)
+	{
+		Font* font = new Font();
+		font->loadFromFile(resourcePath() + "sansation.ttf");
+		fps = Text("FPS: 0", *font, 16);
+		fps.setPosition(window->getSize().x-100, 0);
+		fps.setColor(Color::Black);
+	}
 	//cool idea: if we can save a level as a a file, we can read form that and programatically create the level
 }
 
@@ -38,7 +50,15 @@ void Game::createPlayer()
 	Sprite sprite(*texture, boundingBox);
 	Player* player = new Player(velocity, position, boundingBox, sprite);
 	entityList.push_back(player);
-	p1 = player;
+}
+
+void Game::createBackground()
+{
+	Texture* t1 = new Texture();
+	t1->loadFromFile(resourcePath() + "Sky.png");
+	Texture* t2 = NULL;
+	Texture* t3 = NULL;
+	background = new Background(t1, t2, t3);
 }
 void Game::cleanup()
 {
@@ -50,10 +70,31 @@ void Game::cleanup()
 }
 
 void Game::run ()
-{	
+{
+	//And then there was time
+	Clock clock;
+	
+	Clock fpsCounter;
+	int framesThisSecond;
+	
 	// Start the game loop
     while (window->isOpen())
     {
+		//Timing stuff
+		float deltaTime = clock.getElapsedTime().asSeconds();
+		clock.restart();
+		
+		if (DEVELOPER)
+		{
+			framesThisSecond++;
+			
+			if (fpsCounter.getElapsedTime().asSeconds() > 1) {
+				fps.setString("FPS: " + std::to_string(framesThisSecond));
+				framesThisSecond = 0;
+				fpsCounter.restart();
+			}
+		}
+		
         // Process events, if we have too many events here, then we need an event handler class or funciton or something
         Event event;
         while (window->pollEvent(event))
@@ -73,11 +114,19 @@ void Game::run ()
         // Clear screen
         window->clear(Color(255,255,255,255)); // background color = white
 		
+		//draw background before entities
+		window->draw(*background);
+		
 		for (Entity* entity : entityList)
 		{
-			entity->update();
+			entity->update(deltaTime);
 			window->draw(*entity);
 
+		}
+		
+		if (DEVELOPER)
+		{
+			window->draw(fps);
 		}
 		
         // Update the window

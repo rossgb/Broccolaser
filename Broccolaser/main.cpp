@@ -49,7 +49,7 @@ int main(int, char const**)
 	 */
 	
 	// Create the main window
-    RenderWindow window(VideoMode(800, 600), "SFML window");
+    RenderWindow window(VideoMode(1280, 800), "SFML window");
 	
 	//create the game object
 	Game game(&window);

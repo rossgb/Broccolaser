@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Entity.h"
 #include "Player.h"
+#include "Background.h"
 
 using namespace sf;
 
@@ -20,17 +21,20 @@ class Game
 	
 public:
 	RenderWindow* window;
-	std::vector<Entity*> entityList;
 	
 	Game(RenderWindow* window);
 	void setup();
 	void run ();
- 	void createPlayer();
 	
 private:
-	Player* p1;
-	void cleanup();
+	std::vector<Entity*> entityList;
+	Background* background;
+	Text fps;
 	
+	void cleanup();
+	void createPlayer();
+	void createBackground();
+
 };
 
 #endif /* defined(__Broccolaser__Game__) */

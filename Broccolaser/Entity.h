@@ -18,7 +18,7 @@ class Entity : public sf::Drawable
 {
 	
 public:
-	virtual void update();
+	virtual void update(float deltaTime);
 	
 	Vector2f velocity;
 	Vector2f position;

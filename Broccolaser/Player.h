@@ -22,9 +22,11 @@ public:
 	Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite);
 	~Player();
 
-	void update();
+	void update(float deltaTime);
 
 private:
+	int speed;
+	
 	void handleKeyboard();
 	
 };

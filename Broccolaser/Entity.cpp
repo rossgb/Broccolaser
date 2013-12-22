@@ -16,9 +16,9 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(sprite);
 }
 
-void Entity::update()
+void Entity::update(float deltaTime)
 {
-	position = position + velocity;
+	position = position + velocity * deltaTime;
 	sprite.setPosition(position);
 	boundingBox = IntRect((Vector2i)position, (Vector2i)sprite.getTexture()->getSize());
 }

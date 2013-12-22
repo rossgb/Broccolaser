@@ -18,6 +18,8 @@
 		917D61831863D8FB00401CAC /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D61811863D8FB00401CAC /* Player.cpp */; };
 		917D61A718663A1000401CAC /* DirtBlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 917D61A618663A1000401CAC /* DirtBlock.png */; };
 		917D61A9186641C900401CAC /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = 917D61A8186641C900401CAC /* Player.png */; };
+		917D61AC1867836400401CAC /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D61AA1867836400401CAC /* Background.cpp */; };
+		917D61AE1867867F00401CAC /* Sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 917D61AD1867867F00401CAC /* Sky.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,9 @@
 		917D61821863D8FB00401CAC /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		917D61A618663A1000401CAC /* DirtBlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DirtBlock.png; sourceTree = "<group>"; };
 		917D61A8186641C900401CAC /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
+		917D61AA1867836400401CAC /* Background.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
+		917D61AB1867836400401CAC /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
+		917D61AD1867867F00401CAC /* Sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sky.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +80,9 @@
 				917D616B1862C48D00401CAC /* main.cpp */,
 				917D617B1862D65A00401CAC /* Game.cpp */,
 				917D617E18638C9600401CAC /* Entity.cpp */,
+				917D61AA1867836400401CAC /* Background.cpp */,
 				917D61811863D8FB00401CAC /* Player.cpp */,
+				917D61AB1867836400401CAC /* Background.h */,
 				917D61821863D8FB00401CAC /* Player.h */,
 				917D617F18638C9600401CAC /* Entity.h */,
 				917D617C1862D65A00401CAC /* Game.h */,
@@ -96,6 +103,7 @@
 		917D616D1862C48D00401CAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				917D61AD1867867F00401CAC /* Sky.png */,
 				917D61A8186641C900401CAC /* Player.png */,
 				917D61A618663A1000401CAC /* DirtBlock.png */,
 				917D616E1862C48D00401CAC /* cute_image.jpg */,
@@ -163,6 +171,7 @@
 				917D61751862C48D00401CAC /* icon.png in Resources */,
 				917D61A718663A1000401CAC /* DirtBlock.png in Resources */,
 				917D61A9186641C900401CAC /* Player.png in Resources */,
+				917D61AE1867867F00401CAC /* Sky.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +203,7 @@
 				917D617D1862D65A00401CAC /* Game.cpp in Sources */,
 				917D618018638C9600401CAC /* Entity.cpp in Sources */,
 				917D61831863D8FB00401CAC /* Player.cpp in Sources */,
+				917D61AC1867836400401CAC /* Background.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +349,7 @@
 				917D617A1862C48D00401CAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -18,7 +18,7 @@
 
 using namespace sf;
 
-Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite)
+Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite) : speed(300)
 {
 	this->velocity = velocity;
 	this->position = position;
@@ -26,32 +26,32 @@ Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Spri
 	this->sprite = sprite;
 }
 
-void Player::update()
+void Player::update(float deltaTime)
 {
 	//handle keyboard input
 	handleKeyboard();
 	
-	Entity::update();
+	Entity::update(deltaTime);
 }
 
 void Player::handleKeyboard()
 {
 	if (LEFT)
 	{
-		velocity.x = -1;
+		velocity.x = -speed;
 	} else if (RIGHT)
 	{
-		velocity.x = 1;
+		velocity.x = speed;
 	} else{
 		velocity.x = 0;
 	}
 	
 	if (UP)
 	{
-		velocity.y = -1;
+		velocity.y = -speed;
 	} else if (DOWN)
 	{
-		velocity.y = 1;
+		velocity.y = speed;
 	} else{
 		velocity.y = 0;
 	}
