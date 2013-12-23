@@ -16,14 +16,16 @@
 #define UP Keyboard::isKeyPressed(Keyboard::Up)
 #define DOWN Keyboard::isKeyPressed(Keyboard::Down)
 
+
 using namespace sf;
 
-Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite) : speed(300)
+Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite) : speed(250)
 {
 	this->velocity = velocity;
 	this->position = position;
 	this->boundingBox = boundingBox;
 	this->sprite = sprite;
+	this->sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
 }
 
 void Player::update(float deltaTime)
@@ -37,59 +39,62 @@ void Player::update(float deltaTime)
 void Player::handleKeyboard()
 {
 
+	//sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
 	if(RIGHT) {
 		sprite.setScale(-1,1);
 	} else if (LEFT) {
 		sprite.setScale(1,1);
 	}
+
 	if(!inair)
 	{
 		if (LEFT)
 		{
-			velocity.x = -speed;
+			velocity.x -= speed/10;
 		} else if (RIGHT)
 		{
-			velocity.x = speed;
-		} else{
-			velocity.x = 0;
+			velocity.x += speed/10;
+		} else if (velocity.x!=0) {
+			velocity.x = velocity.x/5;
 		}
 	} else {
-		if (LEFT && velocity.x >=-300)
+		if (LEFT)
 		{
 			velocity.x -= 5;
-		} else if (RIGHT && velocity.x <=300)
+		} else if (RIGHT)
 		{
 			velocity.x += 5;
 		}
 
 	}
 
+
 	if (boundingBox.top+boundingBox.height>=600) {
 		inair = false;
 	} else {
 		inair = true;
 	}
+
 	//IF CAN JUMP + UP
 	if (UP  && !inair)
 	{
-		velocity.y = -300;
+		velocity.y = -speed*1.5;
 	//IF ON GROUND
 	} else if (!inair) 
 	{
 		velocity.y = 0;
 	//FALLING
 	} else {
-		velocity.y += 10;
+		velocity.y += 15;
 	}
-	// if (UP)
-	// {
-	// 	velocity.y = -speed;
-	// } else if (DOWN)
-	// {
-	// 	velocity.y = speed;
-	// } else{
-	// 	velocity.y = 0;
-	// }
+	
+	if(velocity.x>speed)
+	{ 
+		velocity.x = speed;
+	} else if (velocity.x<-speed)
+	{
+		velocity.x = -speed;
+	}
 }
 
 Player::~Player()
