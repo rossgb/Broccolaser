@@ -33,7 +33,7 @@ void Game::setup()
 	
 	createBackground();
 	
-	createEnvironment(300, 370);
+	createEnvironment(0, 570, 1,10);
 	
 	if (DEVELOPER)
 	{
@@ -76,13 +76,15 @@ void Game::createBackground()
 	background = new Background(t1, t2, t3);
 }
 
-void Game::createEnvironment(int x, int y)
+void Game::createEnvironment(int x, int y, int xrep, int yrep)
 {
 	Vector2f velocity(0,0);
 	Vector2f position(0,0);
 	Texture* texture = new Texture();
-	texture->loadFromFile(resolvePath("DirtBlock.png"));
-	Rect<int> boundingBox((Vector2i)position, (Vector2i)texture->getSize());
+	texture->loadFromFile(resolvePath("platform.jpg"));
+	texture->setRepeated(true);
+	Vector2i size = (Vector2i)texture->getSize();
+	Rect<int> boundingBox(position.x,position.y,xrep*size.x,yrep*size.y);
 	Sprite sprite(*texture, boundingBox);
 	EnvironmentObject* obj1 = new EnvironmentObject(velocity, position, boundingBox, sprite);
 	obj1->position = Vector2f(x,y);
@@ -96,22 +98,6 @@ void Game::cleanup()
 	{
 		delete entity;
 	}
-}
-
-std::vector<Entity*> Game::collide(Entity * entity)
-{
-	std::vector<Entity*> touching;
-	for (Entity* other : entityList)
-	{
-		if (other != entity)
-		{
-			if (entity->boundingBox.intersects(other->boundingBox))
-			{
-				touching.push_back(other);
-			}
-		}
-	}
-	return touching;
 }
 
 void Game::run ()
@@ -164,8 +150,7 @@ void Game::run ()
 		
 		for (Entity* entity : entityList)
 		{
-			std::vector<Entity*> touching = collide(entity);
-			entity->update(deltaTime, touching);
+			entity->update(deltaTime);
 			window->draw(*entity);
 
 		}

@@ -78,14 +78,14 @@ void Player::handleKeyboard()
 	//IF CAN JUMP + UP
 	if (UP  && !inair)
 	{
-		velocity.y = -speed*1.5;
+		velocity.y = -speed*1.7;
 	//IF ON GROUND
 	} else if (!inair) 
 	{
 		velocity.y = 0;
 	//FALLING
 	} else {
-		velocity.y += 15;
+		velocity.y += 20;
 	}
 	
 	if(velocity.x>speed)

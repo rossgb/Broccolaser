@@ -1,7 +1,7 @@
 all: test
 
 test: main.o Game.o Entity.o Background.o Player.o EnvironmentObject.o
-		g++ main.o Entity.o Player.o Background.o Game.o -o test -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+		g++ main.o Entity.o Player.o Background.o Game.o EnvironmentObject.o -o test -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 Game.o: Game.cpp
 	g++ -c --std=c++11 Game.cpp
