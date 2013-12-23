@@ -26,6 +26,7 @@ public:
 
 private:
 	int speed;
+	bool inair;
 	
 	void handleKeyboard();
 	
