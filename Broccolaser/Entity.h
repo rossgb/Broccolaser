@@ -10,7 +10,7 @@
 #define __Broccolaser__Entity__
 
 #include <iostream>
-#include <SFML/graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 using namespace sf;
 
