@@ -75,6 +75,7 @@
 		917D61651862C48D00401CAC /* Broccolaser */ = {
 			isa = PBXGroup;
 			children = (
+				917D61AD1867867F00401CAC /* Sky.png */,
 				917D61681862C48D00401CAC /* ResourcePath.mm */,
 				917D616A1862C48D00401CAC /* ResourcePath.hpp */,
 				917D616B1862C48D00401CAC /* main.cpp */,
@@ -103,7 +104,6 @@
 		917D616D1862C48D00401CAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				917D61AD1867867F00401CAC /* Sky.png */,
 				917D61A8186641C900401CAC /* Player.png */,
 				917D61A618663A1000401CAC /* DirtBlock.png */,
 				917D616E1862C48D00401CAC /* cute_image.jpg */,

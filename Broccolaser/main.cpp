@@ -9,7 +9,7 @@
 
 using namespace sf;
 
-int main(int, char const**)
+int main(int argc, char const** argv)
 {
 	
 	/*
@@ -49,7 +49,7 @@ int main(int, char const**)
 	 */
 	
 	// Create the main window
-    RenderWindow window(VideoMode(1280, 800), "SFML window");
+    RenderWindow window(VideoMode(1280, 800), "Broccolaser");
 	
 	//create the game object
 	Game game(&window);

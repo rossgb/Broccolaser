@@ -37,7 +37,7 @@ void Game::setup()
 		fps.setPosition(window->getSize().x-100, 0);
 		fps.setColor(Color::Black);
 	}
-	//cool idea: if we can save a level as a a file, we can read form that and programatically create the level
+	//cool idea: if we can save a level as a a file, we can read from that and programatically create the level
 }
 
 void Game::createPlayer()
