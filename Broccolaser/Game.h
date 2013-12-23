@@ -24,7 +24,7 @@ public:
 	
 	Game(RenderWindow* window);
 	void setup();
-	void run ();
+	void run();
 	
 private:
 	std::vector<Entity*> entityList;

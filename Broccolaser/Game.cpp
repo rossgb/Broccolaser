@@ -12,7 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <assert.h>
 
-#include "ResourcePath.hpp"
+//#include "ResourcePath.hpp"
 #include "Game.h"
 
 #define DEVELOPER true
@@ -32,7 +32,8 @@ void Game::setup()
 	if (DEVELOPER)
 	{
 		Font* font = new Font();
-		font->loadFromFile(resourcePath() + "sansation.ttf");
+		//font->loadFromFile(resourcePath() + "sansation.ttf");
+		font->loadFromFile("sansation.ttf");
 		fps = Text("FPS: 0", *font, 16);
 		fps.setPosition(window->getSize().x-100, 0);
 		fps.setColor(Color::Black);
@@ -45,7 +46,8 @@ void Game::createPlayer()
 	Vector2f velocity(0,0);
 	Vector2f position(0,0);
 	Texture* texture = new Texture();
-	texture->loadFromFile(resourcePath() + "Player.png");
+	texture->loadFromFile("Player.png");
+	//texture->loadFromFile(resourcePath() + "Player.png");
 	Rect<int> boundingBox((Vector2i)position, (Vector2i)texture->getSize());
 	Sprite sprite(*texture, boundingBox);
 	Player* player = new Player(velocity, position, boundingBox, sprite);
@@ -55,7 +57,8 @@ void Game::createPlayer()
 void Game::createBackground()
 {
 	Texture* t1 = new Texture();
-	t1->loadFromFile(resourcePath() + "Sky.png");
+	t1->loadFromFile("Sky.png");
+	//t1->loadFromFile(resourcePath() + "Sky.png");
 	Texture* t2 = NULL;
 	Texture* t3 = NULL;
 	background = new Background(t1, t2, t3);
