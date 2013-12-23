@@ -24,7 +24,7 @@ public:
 	EnvironmentObject();
 		
 private:
-	void update(float deltaTime);
+	void update(float deltaTime, std::vector<Entity*> touching);
 };
 
 #endif /* defined(__Broccolaser__EnvironmentObject__) */

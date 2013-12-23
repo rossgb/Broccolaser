@@ -16,12 +16,12 @@ EnvironmentObject::EnvironmentObject(Vector2f velocity, Vector2f position, Rect<
 	this->sprite = sprite;
 }
 
-void EnvironmentObject::update(float deltaTime)
+void EnvironmentObject::update(float deltaTime, std::vector<Entity*> touching)
 {
 	//std::cout << this->position.x;
 	//std::cout << this->boundingBox.top << std::endl;
 	//std::cout << this->sprite.getTextureRect().top;
 
 	
-	Entity::update(deltaTime);
+	Entity::update(deltaTime, touching);
 }

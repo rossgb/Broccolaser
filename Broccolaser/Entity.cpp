@@ -16,7 +16,7 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(sprite);
 }
 
-void Entity::update(float deltaTime)
+void Entity::update(float deltaTime, std::vector<Entity*> touching)
 {
 	position = position + velocity * deltaTime;
 	sprite.setPosition(position);

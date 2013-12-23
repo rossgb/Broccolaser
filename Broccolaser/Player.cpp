@@ -28,12 +28,12 @@ Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Spri
 	this->sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
 }
 
-void Player::update(float deltaTime)
+void Player::update(float deltaTime, std::vector<Entity*> touching)
 {
 	//handle keyboard input
 	handleKeyboard();
-	
-	Entity::update(deltaTime);
+		
+	Entity::update(deltaTime, touching);
 }
 
 void Player::handleKeyboard()
