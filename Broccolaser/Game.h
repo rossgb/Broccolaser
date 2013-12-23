@@ -35,6 +35,7 @@ private:
 	void cleanup();
 	void createPlayer();
 	void createBackground();
+	void createEnvironment(int, int);
 
 };
 

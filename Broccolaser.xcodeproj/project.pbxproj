@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9145E40C1867F27E00D2A208 /* EnvironmentObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9145E40A1867F27A00D2A208 /* EnvironmentObject.cpp */; };
 		917D61691862C48D00401CAC /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 917D61681862C48D00401CAC /* ResourcePath.mm */; };
 		917D616C1862C48D00401CAC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917D616B1862C48D00401CAC /* main.cpp */; };
 		917D616F1862C48D00401CAC /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 917D616E1862C48D00401CAC /* cute_image.jpg */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9145E40A1867F27A00D2A208 /* EnvironmentObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentObject.cpp; sourceTree = "<group>"; };
+		9145E40B1867F27D00D2A208 /* EnvironmentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentObject.h; sourceTree = "<group>"; };
 		917D61631862C48D00401CAC /* Broccolaser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Broccolaser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		917D61671862C48D00401CAC /* Broccolaser-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Broccolaser-Info.plist"; sourceTree = "<group>"; };
 		917D61681862C48D00401CAC /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
@@ -75,14 +78,15 @@
 		917D61651862C48D00401CAC /* Broccolaser */ = {
 			isa = PBXGroup;
 			children = (
-				917D61AD1867867F00401CAC /* Sky.png */,
 				917D61681862C48D00401CAC /* ResourcePath.mm */,
 				917D616A1862C48D00401CAC /* ResourcePath.hpp */,
 				917D616B1862C48D00401CAC /* main.cpp */,
 				917D617B1862D65A00401CAC /* Game.cpp */,
+				9145E40A1867F27A00D2A208 /* EnvironmentObject.cpp */,
 				917D617E18638C9600401CAC /* Entity.cpp */,
 				917D61AA1867836400401CAC /* Background.cpp */,
 				917D61811863D8FB00401CAC /* Player.cpp */,
+				9145E40B1867F27D00D2A208 /* EnvironmentObject.h */,
 				917D61AB1867836400401CAC /* Background.h */,
 				917D61821863D8FB00401CAC /* Player.h */,
 				917D617F18638C9600401CAC /* Entity.h */,
@@ -104,6 +108,7 @@
 		917D616D1862C48D00401CAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				917D61AD1867867F00401CAC /* Sky.png */,
 				917D61A8186641C900401CAC /* Player.png */,
 				917D61A618663A1000401CAC /* DirtBlock.png */,
 				917D616E1862C48D00401CAC /* cute_image.jpg */,
@@ -204,6 +209,7 @@
 				917D618018638C9600401CAC /* Entity.cpp in Sources */,
 				917D61831863D8FB00401CAC /* Player.cpp in Sources */,
 				917D61AC1867836400401CAC /* Background.cpp in Sources */,
+				9145E40C1867F27E00D2A208 /* EnvironmentObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
