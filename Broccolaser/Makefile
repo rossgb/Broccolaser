@@ -1,6 +1,6 @@
 all: test
 
-test: main.o Game.o Entity.o Background.o Player.o
+test: main.o Game.o Entity.o Background.o Player.o EnvironmentObject.o
 		g++ main.o Entity.o Player.o Background.o Game.o -o test -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 Game.o: Game.cpp
@@ -17,3 +17,6 @@ Player.o: Player.cpp
 
 main.o: main.cpp 
 	g++ -c --std=c++11 main.cpp
+	
+EnvironmentObject.o: EnvironmentObject.cpp
+	g++ -c --std=c++11 EnvironmentObject.cpp

@@ -14,12 +14,10 @@
 
 #ifdef __APPLE__
 #include "ResourcePath.hpp"
-#define APPLE true
-#else
-#define APPLE false
 #endif
 
 #include "Game.h"
+#include "EnvironmentObject.h"
 
 #define DEVELOPER true
 
@@ -35,10 +33,12 @@ void Game::setup()
 	
 	createBackground();
 	
+	createEnvironment(300, 570);
+	
 	if (DEVELOPER)
 	{
 		Font* font = new Font();
-		font->loadFromFile(resolvePath("sanitasion.ttf"));
+		font->loadFromFile(resolvePath("sansation.ttf"));
 		fps = Text("FPS: 0", *font, 16);
 		fps.setPosition(window->getSize().x-100, 0);
 		fps.setColor(Color::Black);
@@ -75,6 +75,20 @@ void Game::createBackground()
 	Texture* t3 = NULL;
 	background = new Background(t1, t2, t3);
 }
+
+void Game::createEnvironment(int x, int y)
+{
+	Vector2f velocity(0,0);
+	Vector2f position(0,0);
+	Texture* texture = new Texture();
+	texture->loadFromFile(resolvePath("DirtBlock.png"));
+	Rect<int> boundingBox((Vector2i)position, (Vector2i)texture->getSize());
+	Sprite sprite(*texture, boundingBox);
+	EnvironmentObject* obj1 = new EnvironmentObject(velocity, position, boundingBox, sprite);
+	obj1->position = Vector2f(x,y);
+	entityList.push_back(obj1);
+}
+
 void Game::cleanup()
 {
 	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
