@@ -12,7 +12,13 @@
 #include <SFML/Graphics.hpp>
 #include <assert.h>
 
+#ifdef __APPLE__
 #include "ResourcePath.hpp"
+#define APPLE true
+#else
+#define APPLE false
+#endif
+
 #include "Game.h"
 
 #define DEVELOPER true
@@ -32,7 +38,7 @@ void Game::setup()
 	if (DEVELOPER)
 	{
 		Font* font = new Font();
-		font->loadFromFile(resourcePath() + "sansation.ttf");
+		font->loadFromFile(resolvePath("sanitasion.ttf"));
 		fps = Text("FPS: 0", *font, 16);
 		fps.setPosition(window->getSize().x-100, 0);
 		fps.setColor(Color::Black);
@@ -40,12 +46,21 @@ void Game::setup()
 	//cool idea: if we can save a level as a a file, we can read from that and programatically create the level
 }
 
+std::string Game::resolvePath(std::string str)
+{
+#ifdef __APPLE__
+	return resourcePath() + str;
+#else
+	return str;
+#endif
+}
+
 void Game::createPlayer()
 {
 	Vector2f velocity(0,0);
 	Vector2f position(0,0);
 	Texture* texture = new Texture();
-	texture->loadFromFile(resourcePath() + "Player.png");
+	texture->loadFromFile(resolvePath("Player.png"));
 	Rect<int> boundingBox((Vector2i)position, (Vector2i)texture->getSize());
 	Sprite sprite(*texture, boundingBox);
 	Player* player = new Player(velocity, position, boundingBox, sprite);
@@ -55,7 +70,7 @@ void Game::createPlayer()
 void Game::createBackground()
 {
 	Texture* t1 = new Texture();
-	t1->loadFromFile(resourcePath() + "Sky.png");
+	t1->loadFromFile(resolvePath("Sky.png"));
 	Texture* t2 = NULL;
 	Texture* t3 = NULL;
 	background = new Background(t1, t2, t3);

@@ -1,7 +1,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "ResourcePath.hpp"
+
 #include "Game.h"
 
 //This file runs the game and manages the window

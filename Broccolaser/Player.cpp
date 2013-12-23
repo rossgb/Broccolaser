@@ -11,10 +11,10 @@
 
 
 //later if we want to change the controls programatically, we should turn this into an enum
-#define LEFT Keyboard::isKeyPressed(Keyboard::A)
-#define RIGHT Keyboard::isKeyPressed(Keyboard::S)
-#define UP Keyboard::isKeyPressed(Keyboard::W)
-#define DOWN Keyboard::isKeyPressed(Keyboard::R)
+#define LEFT Keyboard::isKeyPressed(Keyboard::Left)
+#define RIGHT Keyboard::isKeyPressed(Keyboard::Right)
+#define UP Keyboard::isKeyPressed(Keyboard::Up)
+#define DOWN Keyboard::isKeyPressed(Keyboard::Down)
 
 using namespace sf;
 

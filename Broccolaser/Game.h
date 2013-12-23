@@ -24,13 +24,14 @@ public:
 	
 	Game(RenderWindow* window);
 	void setup();
-	void run ();
+	void run();
 	
 private:
 	std::vector<Entity*> entityList;
 	Background* background;
 	Text fps;
 	
+	std::string resolvePath(std::string);
 	void cleanup();
 	void createPlayer();
 	void createBackground();
