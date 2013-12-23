@@ -36,22 +36,45 @@ void Player::update(float deltaTime)
 
 void Player::handleKeyboard()
 {
-	if (LEFT)
+
+	if(RIGHT) {
+		sprite.setScale(-1,1);
+	} else if (LEFT) {
+		sprite.setScale(1,1);
+	}
+	if(!inair)
 	{
-		velocity.x = -speed;
-	} else if (RIGHT)
-	{
-		velocity.x = speed;
-	} else{
-		velocity.x = 0;
+		if (LEFT)
+		{
+			velocity.x = -speed;
+		} else if (RIGHT)
+		{
+			velocity.x = speed;
+		} else{
+			velocity.x = 0;
+		}
+	} else {
+		if (LEFT && velocity.x >=-300)
+		{
+			velocity.x -= 5;
+		} else if (RIGHT && velocity.x <=300)
+		{
+			velocity.x += 5;
+		}
+
 	}
 
+	if (boundingBox.top+boundingBox.height>=600) {
+		inair = false;
+	} else {
+		inair = true;
+	}
 	//IF CAN JUMP + UP
-	if (UP  && boundingBox.top+boundingBox.height>=600)
+	if (UP  && !inair)
 	{
 		velocity.y = -300;
 	//IF ON GROUND
-	} else if ((boundingBox.top+boundingBox.height)>=600) 
+	} else if (!inair) 
 	{
 		velocity.y = 0;
 	//FALLING
