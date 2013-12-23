@@ -33,7 +33,9 @@ void Game::setup()
 	
 	createBackground();
 	
-	createEnvironment(0, 570, 1,10);
+	createEnvironment(0, 572, 10, 1);
+
+	createEnvironment(650, 572, 10, 1);
 	
 	if (DEVELOPER)
 	{
@@ -60,7 +62,7 @@ void Game::createPlayer()
 	Vector2f velocity(0,0);
 	Vector2f position(0,0);
 	Texture* texture = new Texture();
-	texture->loadFromFile(resolvePath("Player.png"));
+	texture->loadFromFile(resolvePath("PlayerSprite.png"));
 	Rect<int> boundingBox((Vector2i)position, (Vector2i)texture->getSize());
 	Sprite sprite(*texture, boundingBox);
 	Player* player = new Player(velocity, position, boundingBox, sprite);
