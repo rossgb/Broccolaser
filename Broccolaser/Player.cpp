@@ -45,16 +45,28 @@ void Player::handleKeyboard()
 	} else{
 		velocity.x = 0;
 	}
-	
-	if (UP)
+
+	//IF CAN JUMP + UP
+	if (UP  && boundingBox.top+boundingBox.height>=600)
 	{
-		velocity.y = -speed;
-	} else if (DOWN)
+		velocity.y = -300;
+	//IF ON GROUND
+	} else if ((boundingBox.top+boundingBox.height)>=600) 
 	{
-		velocity.y = speed;
-	} else{
 		velocity.y = 0;
+	//FALLING
+	} else {
+		velocity.y += 10;
 	}
+	// if (UP)
+	// {
+	// 	velocity.y = -speed;
+	// } else if (DOWN)
+	// {
+	// 	velocity.y = speed;
+	// } else{
+	// 	velocity.y = 0;
+	// }
 }
 
 Player::~Player()
