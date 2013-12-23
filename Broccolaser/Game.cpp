@@ -91,6 +91,22 @@ void Game::createEnvironment(int x, int y, int xrep, int yrep)
 	entityList.push_back(obj1);
 }
 
+std::vector<Entity*> Game::collide(Entity * entity)
+{
+	std::vector<Entity*> touching;
+	for (Entity* other : entityList)
+	{
+		if (other != entity)
+		{
+			if (entity->boundingBox.intersects(other->boundingBox))
+			{
+				touching.push_back(other);
+			}
+		}
+	}
+	return touching;
+}
+
 void Game::cleanup()
 {
 	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
@@ -150,7 +166,8 @@ void Game::run ()
 		
 		for (Entity* entity : entityList)
 		{
-			entity->update(deltaTime);
+			std::vector<Entity*> touching = collide(entity);
+			entity->update(deltaTime, touching);
 			window->draw(*entity);
 
 		}
