@@ -20,13 +20,13 @@
 using namespace sf;
 
 Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite) :
-	speed(250), jumpPower(100), jumpVel(0), ground(NULL)
+	speed(250), jumpPower(130), jumpVel(0), ground(NULL), facingLeft(true)
 {
 	this->velocity = velocity;
 	this->position = position;
 	this->boundingBox = boundingBox;
 	this->sprite = sprite;
-	this->sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
+	//this->sprite.setOrigin(boundingBox.width/2,0);
 }
 
 void Player::update(float deltaTime, std::vector<Entity*> touching)
@@ -41,7 +41,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	{
 		position = Vector2f(0,0);
 	}
-		
+			
 	Entity::update(deltaTime, touching);
 }
 
@@ -50,7 +50,11 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	ground = NULL;
 	inair = true;
 	Rect<int> feet(boundingBox);
-	feet.top -= feet.height / 2;
+	feet.top += boundingBox.height / 2.0f;
+	feet.height -= boundingBox.height / 2.0f;
+	feet.left += 5;
+	feet.width -= 10;
+	
 	for (Entity* entity : touching)
 	{
 		//TODO: ensure entity is something we can land on e.g., an EnvironmentObject
@@ -62,25 +66,28 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	}
 	if (ground != NULL && !UP)
 	{
-		position.y = ground->boundingBox.top - boundingBox.height /2 + 1;
+		//lock player to the ground
+		position.y = ground->boundingBox.top - boundingBox.height + 1;
 	}
 }
 
 void Player::handleKeyboard()
 {
 	//physics constants
-	int terminalVelocity = 1800;
+	int terminalVelocity = 2300;
 	int accel = 25;
-	int gravity = 20;
+	int gravity = 30;
 	int friction = 20;
 	
 	//make the player face the direction he's moving
 	//sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
 	if(RIGHT) {
-		sprite.setScale(-1,1);
+		//sprite.setScale(-1,1);
+		
 	} else if (LEFT) {
 		sprite.setScale(1,1);
 	}
+	
 	
 	//check collisions
 	

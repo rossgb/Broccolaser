@@ -29,6 +29,7 @@ private:
 	int jumpPower;
 	int jumpVel;
 	bool inair;
+	bool facingLeft;
 	Entity* ground;
 	
 	void handleKeyboard();
