@@ -26,9 +26,13 @@ public:
 
 private:
 	int speed;
+	int jumpPower;
+	int jumpVel;
 	bool inair;
+	Entity* ground;
 	
 	void handleKeyboard();
+	void handleCollisions(std::vector<Entity*> touching);
 	
 };
 

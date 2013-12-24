@@ -19,7 +19,8 @@
 
 using namespace sf;
 
-Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite) : speed(250)
+Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite) :
+	speed(250), jumpPower(100), jumpVel(0), ground(NULL)
 {
 	this->velocity = velocity;
 	this->position = position;
@@ -30,68 +31,113 @@ Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Spri
 
 void Player::update(float deltaTime, std::vector<Entity*> touching)
 {
+	//handle collisions
+	handleCollisions(touching);
 	//handle keyboard input
 	handleKeyboard();
+	
+	// /!\ HACK ZONE
+	if (position.y > 800)
+	{
+		position = Vector2f(0,0);
+	}
 		
 	Entity::update(deltaTime, touching);
 }
 
+void Player::handleCollisions(std::vector<Entity*> touching)
+{
+	ground = NULL;
+	inair = true;
+	Rect<int> feet(boundingBox);
+	feet.top -= feet.height / 2;
+	for (Entity* entity : touching)
+	{
+		//TODO: ensure entity is something we can land on e.g., an EnvironmentObject
+		if (feet.intersects(entity->boundingBox))
+		{
+			inair = false;
+			ground = entity;
+		}
+	}
+	if (ground != NULL && !UP)
+	{
+		position.y = ground->boundingBox.top - boundingBox.height /2 + 1;
+	}
+}
+
 void Player::handleKeyboard()
 {
-
+	//physics constants
+	int terminalVelocity = 1800;
+	int accel = 25;
+	int gravity = 20;
+	int friction = 20;
+	
+	//make the player face the direction he's moving
 	//sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
 	if(RIGHT) {
 		sprite.setScale(-1,1);
 	} else if (LEFT) {
 		sprite.setScale(1,1);
 	}
-
-	if(!inair)
+	
+	//check collisions
+	
+	//airborne specifics
+	accel = (inair) ? accel/5 : accel;
+	friction = (inair) ? friction/5 : friction;
+	
+	//control left and right
+	if (LEFT)
 	{
-		if (LEFT)
-		{
-			velocity.x -= speed/10;
-		} else if (RIGHT)
-		{
-			velocity.x += speed/10;
-		} else if (velocity.x!=0) {
-			velocity.x = velocity.x/5;
-		}
-	} else {
-		if (LEFT)
-		{
-			velocity.x -= 5;
-		} else if (RIGHT)
-		{
-			velocity.x += 5;
-		}
-
-	}
-
-
-	if (boundingBox.top+boundingBox.height>=600) {
-		inair = false;
-	} else {
-		inair = true;
-	}
-
-	//IF CAN JUMP + UP
-	if (UP  && !inair)
+		velocity.x -= accel;
+	} else if (RIGHT)
 	{
-		velocity.y = -speed*1.7;
-	//IF ON GROUND
-	} else if (!inair) 
+		velocity.x += accel;
+	} else if (velocity.x > friction || velocity.x < -friction)
 	{
-		velocity.y = 0;
-	//FALLING
-	} else {
-		velocity.y += 20;
+		//no keys pressed? slow down!
+		velocity.x -= (velocity.x > 0) ? friction : -friction;
+	} else
+	{
+		velocity.x = 0;
 	}
 	
-	if(velocity.x>speed)
+	//IF CAN JUMP + UP
+	if (UP)
+	{
+		velocity.y -= jumpVel;
+		if (velocity.y < 0)
+		{
+			inair = true; // if we're going up, then we're in the air
+		}
+	} else
+	{
+		//no jumpy if we've already jumped. If we're on the ground, this will get set to the jump power in the next step
+		jumpVel = 0;
+	}
+	
+	if (!inair)
+	{
+		//if we're on the ground, reset our jump
+		jumpVel = jumpPower;
+		velocity.y = 0;
+	} else {
+		//FALLING
+		jumpVel /=1.1;
+		
+		if (velocity.y < terminalVelocity)
+		{
+			velocity.y += gravity;
+		}
+	}
+	
+	//limit the player's max speed
+	if(velocity.x > speed)
 	{ 
 		velocity.x = speed;
-	} else if (velocity.x<-speed)
+	} else if (velocity.x < -speed)
 	{
 		velocity.x = -speed;
 	}

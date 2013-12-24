@@ -20,5 +20,6 @@ void Entity::update(float deltaTime, std::vector<Entity*> touching)
 {
 	position = position + velocity * deltaTime;
 	sprite.setPosition(position);
-	boundingBox = IntRect((Vector2i)position, (Vector2i)sprite.getTexture()->getSize());
+	boundingBox.top = position.y;
+	boundingBox.left = position.x;
 }
