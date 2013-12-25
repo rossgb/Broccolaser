@@ -24,8 +24,8 @@ Player::Player(Vector2f position, Texture* texture) :
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
-	this->sprite = Sprite(*texture, IntRect(Vector2i(0,0), (Vector2i)texture->getSize()));
-	this->boundingBox = IntRect(Vector2i(0,0),(Vector2i)sprite.getTexture()->getSize());
+	this->sprite = Sprite(*texture, IntRect(0,0,48,88));
+	this->boundingBox = IntRect(0,0,48,88);
 	//this->sprite.setOrigin(boundingBox.width/2,0);
 }
 
@@ -43,8 +43,8 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	// /!\ HACK ZONE
 	if (position.y > 800)
 	{
-		position = Vector2f(90,90);
-	}			
+		position = Vector2f(0,0);
+	}
 }
 
 void Player::handleCollisions(std::vector<Entity*> touching)
@@ -52,8 +52,8 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	ground = NULL;
 	inair = true;
 	Rect<int> feet(boundingBox);
-	feet.height = 20;
-	feet.top += boundingBox.height - 20;
+	feet.height = 10;
+	feet.top += boundingBox.height - 10;
 	feet.left += 5;
 	feet.width -= 10;
 	
