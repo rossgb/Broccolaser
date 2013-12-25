@@ -60,7 +60,5 @@ int main(int argc, char const** argv)
 	//run the game, its a myster what this does, at least as far as this file goes
 	game.run();
     
-	delete game;
-	
     return EXIT_SUCCESS;
 }

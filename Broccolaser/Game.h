@@ -23,7 +23,6 @@ public:
 	RenderWindow* window;
 	
 	Game(RenderWindow* window);
-	~Game();
 	void setup();
 	void run();
 	
@@ -33,6 +32,7 @@ private:
 	Text fps;
 	
 	std::string resolvePath(std::string);
+	void cleanup();
 	void createPlayer();
 	void createBackground();
 	std::vector<Entity*> collide(Entity*);
