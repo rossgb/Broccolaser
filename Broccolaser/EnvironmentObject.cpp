@@ -15,8 +15,8 @@ EnvironmentObject::EnvironmentObject(Vector2f position, Texture* texture, Vector
 	repeat.y *= texture->getSize().y;
 	this->velocity = Vector2f(0,0);
 	this->position = position;
-	this->boundingBox = IntRect(Vector2i(0,0),repeat);
-	this->sprite = Sprite(*texture, boundingBox);
+	this->boundingBox = IntRect((Vector2i)position,repeat);
+	this->sprite = Sprite(*texture, IntRect(Vector2i(0,0), repeat));
 ;
 }
 

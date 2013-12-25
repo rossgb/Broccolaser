@@ -20,7 +20,7 @@
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250), jumpPower(130), jumpVel(0), ground(NULL), facingLeft(true)
+	speed(250), jumpPower(150), jumpVel(0), ground(NULL), facingLeft(true)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
