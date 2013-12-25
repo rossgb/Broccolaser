@@ -25,6 +25,9 @@ public:
 	void update(float deltaTime, std::vector<Entity*> touching);
 
 private:
+	int state;
+	float stateTimer;
+	int stateChange;
 	int speed;
 	int jumpPower;
 	int jumpVel;
@@ -34,6 +37,8 @@ private:
 	
 	void handleKeyboard();
 	void handleCollisions(std::vector<Entity*> touching);
+	void handleState(int pos);
+
 	
 };
 

@@ -20,7 +20,7 @@
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250), jumpPower(150), jumpVel(0), ground(NULL), facingLeft(true)
+	speed(250), jumpPower(150), jumpVel(0), ground(NULL), facingLeft(false)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
@@ -35,6 +35,20 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	handleCollisions(touching);
 	//handle keyboard input
 	handleKeyboard();
+	//std::cout << facingLeft;
+	stateTimer += deltaTime;
+	if (stateTimer >= .3)
+	{
+		stateChange++;
+		stateTimer = 0;
+	}
+
+	if (stateChange >= 4)
+	{
+		stateChange = 0;
+	}
+	std::cout << stateChange << "\n";
+	handleState(stateChange);
 	
 	// /!\ HACK ZONE
 	if (position.y > 800)
@@ -43,6 +57,20 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	}
 			
 	Entity::update(deltaTime, touching);
+}
+
+void Player::handleState(int pos)
+{
+	if (velocity.y != 0) {
+		state = 2;
+	} else if (velocity.x != 0) {
+		state = 4;
+	} else {
+		state = 0;
+	}
+
+	sprite.setTextureRect(IntRect(50*pos,90*(state+(int)facingLeft),48,87));
+	
 }
 
 void Player::handleCollisions(std::vector<Entity*> touching)
@@ -82,10 +110,10 @@ void Player::handleKeyboard()
 	//make the player face the direction he's moving
 	//sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
 	if(RIGHT) {
-		//sprite.setScale(-1,1);
+		facingLeft = false;
 		
 	} else if (LEFT) {
-		sprite.setScale(1,1);
+		facingLeft = true;
 	}
 	
 	
