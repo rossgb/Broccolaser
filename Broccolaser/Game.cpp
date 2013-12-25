@@ -67,7 +67,7 @@ void Game::createPlayer()
 	Sprite sprite(*texture, Rect<int>(Vector2i(0,0),(Vector2i)texture->getSize()));
 
 	Player* player = new Player(Vector2f(90,90), texture);
-	view = View(player->position,Vector2f(500,500));
+	view = View(player->position, Vector2f(500,500));
 	camera = new Camera(player, &view);
 	
 	entityList.push_back(player);
