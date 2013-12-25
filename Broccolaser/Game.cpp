@@ -67,8 +67,11 @@ void Game::createPlayer()
 	Sprite sprite(*texture, Rect<int>(Vector2i(0,0),(Vector2i)texture->getSize()));
 
 	Player* player = new Player(Vector2f(90,90), texture);
-	view = View(player->position, (Vector2f)(window->getSize()/2u));
-	camera = new Camera(player, &view);
+	if (!DEVELOPER) 
+	{
+		view = View(player->position, (Vector2f)(window->getSize()/2u));
+		camera = new Camera(player, &view);
+	}
 	
 	entityList.push_back(player);
 }
@@ -175,9 +178,13 @@ void Game::run ()
 		
 		//draw background before entities
 		window->draw(*background);
-		
-		camera->update();
-		window->setView(view);
+
+		if (!DEVELOPER)
+		{
+			camera->update();
+			window->setView(view);
+		}
+
 		for (Entity* entity : entityList)
 		{
 			std::vector<Entity*> touching = collide(entity);
