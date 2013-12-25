@@ -20,7 +20,7 @@ class EnvironmentObject : public Entity
 {
 	
 public:
-	EnvironmentObject(Vector2f position, Texture* texture, Vector2i repeat);
+	EnvironmentObject(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite);
 	EnvironmentObject();
 		
 private:

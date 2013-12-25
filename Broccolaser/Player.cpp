@@ -19,12 +19,12 @@
 
 using namespace sf;
 
-Player::Player(Vector2f position, Sprite sprite) :
+Player::Player(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite) :
 	speed(250), jumpPower(130), jumpVel(0), ground(NULL), facingLeft(true)
 {
-	this->velocity = Vector2f(0,0);
+	this->velocity = velocity;
 	this->position = position;
-	this->boundingBox = IntRect(Vector2i(0,0),(Vector2i)sprite.getTexture()->getSize());
+	this->boundingBox = boundingBox;
 	this->sprite = sprite;
 	//this->sprite.setOrigin(boundingBox.width/2,0);
 }
@@ -39,7 +39,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	// /!\ HACK ZONE /!\
 	if (position.y > 800)
 	{
-		position = Vector2f(90,90);
+		position = Vector2f(0,0);
 	}
 			
 	Entity::update(deltaTime, touching);

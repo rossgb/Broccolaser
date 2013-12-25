@@ -36,7 +36,7 @@ private:
 	void createPlayer();
 	void createBackground();
 	std::vector<Entity*> collide(Entity*);
-	void createEnvironment(int, int, int, int);
+	void createEnvironment(int, int,int,int);
 
 };
 
