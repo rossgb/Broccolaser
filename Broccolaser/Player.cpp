@@ -19,13 +19,13 @@
 
 using namespace sf;
 
-Player::Player(Vector2f position, Sprite sprite) :
+Player::Player(Vector2f position, Texture* texture) :
 	speed(250), jumpPower(130), jumpVel(0), ground(NULL), facingLeft(true)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
+	this->sprite = Sprite(*texture, IntRect(Vector2i(0,0), (Vector2i)texture->getSize()));
 	this->boundingBox = IntRect(Vector2i(0,0),(Vector2i)sprite.getTexture()->getSize());
-	this->sprite = sprite;
 	//this->sprite.setOrigin(boundingBox.width/2,0);
 }
 
@@ -50,8 +50,8 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	ground = NULL;
 	inair = true;
 	Rect<int> feet(boundingBox);
-	feet.top += boundingBox.height / 2.0f;
-	feet.height -= boundingBox.height / 2.0f;
+	feet.top += boundingBox.height / 4.0f;
+	feet.height -= boundingBox.height / 4.0f;
 	feet.left += 5;
 	feet.width -= 10;
 	

@@ -10,6 +10,7 @@
 
 EnvironmentObject::EnvironmentObject(Vector2f position, Texture* texture, Vector2i repeat)
 {
+	texture->setRepeated(true);
 	repeat.x *= texture->getSize().x;
 	repeat.y *= texture->getSize().y;
 	this->velocity = Vector2f(0,0);

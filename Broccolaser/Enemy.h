@@ -17,7 +17,7 @@ using namespace sf;
 class Enemy : public Entity
 {
 public:
-	
+	Enemy(Vector2f position, Texture* texture);
 	
 };
 

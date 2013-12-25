@@ -37,6 +37,8 @@ void Game::setup()
 
 	createEnvironment(650, 572, 10, 1);
 	
+	createEnemy(800,400);
+	
 	if (DEVELOPER)
 	{
 		Font* font = new Font();
@@ -61,9 +63,8 @@ void Game::createPlayer()
 {
 	Texture* texture = new Texture();
 	texture->loadFromFile(resolvePath("PlayerSprite.png"));
-	Sprite sprite(*texture, Rect<int>(Vector2i(0,0),(Vector2i)texture->getSize()));
 	
-	Player* player = new Player(Vector2f(90,90), sprite);
+	Player* player = new Player(Vector2f(90,90), texture);
 	
 	entityList.push_back(player);
 }
@@ -81,11 +82,20 @@ void Game::createEnvironment(int x, int y, int xrep, int yrep)
 {
 	Texture* texture = new Texture();
 	texture->loadFromFile(resolvePath("platform.jpg"));
-	texture->setRepeated(true);
 
 	EnvironmentObject* obj1 = new EnvironmentObject(Vector2f(x,y), texture, Vector2i(xrep,yrep));
 		
 	entityList.push_back(obj1);
+}
+
+void Game::createEnemy(int x, int y)
+{
+	Texture* texture = new Texture();
+	texture->loadFromFile(resolvePath("derp.png"));
+	
+	Enemy* enemy = new Enemy(Vector2f(x,y), texture);
+	
+	entityList.push_back(enemy);
 }
 
 std::vector<Entity*> Game::collide(Entity * entity)

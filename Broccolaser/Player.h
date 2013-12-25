@@ -19,7 +19,7 @@ class Player : public Entity
 	
 	
 public:
-	Player(Vector2f position, Sprite sprite);
+	Player(Vector2f position, Texture* texture);
 	~Player();
 
 	void update(float deltaTime, std::vector<Entity*> touching);
