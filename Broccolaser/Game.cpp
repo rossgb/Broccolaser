@@ -74,6 +74,7 @@ void Game::createBackground()
 	t1->loadFromFile(resolvePath("Sky.png"));
 	Texture* t2 = NULL;
 	Texture* t3 = NULL;
+	
 	background = new Background(t1, t2, t3);
 }
 
@@ -102,15 +103,6 @@ std::vector<Entity*> Game::collide(Entity * entity)
 		}
 	}
 	return touching;
-}
-
-void Game::cleanup()
-{
-	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
-	for (Entity* entity : entityList)
-	{
-		delete entity;
-	}
 }
 
 void Game::run ()
@@ -177,6 +169,14 @@ void Game::run ()
         // Update the window
         window->display();
     }
-	
-	cleanup();
+}
+
+Game::~Game()
+{
+	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
+	for (Entity* entity : entityList)
+	{
+		delete entity;
+	}
+	delete background;
 }
