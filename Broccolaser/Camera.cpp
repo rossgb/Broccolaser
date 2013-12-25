@@ -10,5 +10,5 @@ Camera::Camera(Player* player, View* view)
 
 void Camera::update()
 {
-	view->setCenter(player->position.x, player->position.y);
+	view->setCenter(player->position.x + player->boundingBox.width/2, player->position.y + player->boundingBox.height/2);
 }

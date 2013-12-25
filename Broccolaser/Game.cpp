@@ -176,18 +176,18 @@ void Game::run ()
 		
 		float deltaTime = deltaClock.restart().asSeconds();
 
-		if (!DEVELOPER)
-		{
-			camera->update();
-			window->setView(view);
-		}
-
 		for (Entity* entity : entityList)
 		{
 			std::vector<Entity*> touching = collide(entity);
 			entity->update(deltaTime, touching);
 			window->draw(*entity);
 
+		}
+		
+		if (!DEVELOPER)
+		{
+			camera->update();
+			window->setView(view);
 		}
 		
 		if (DEVELOPER)
