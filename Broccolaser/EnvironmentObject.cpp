@@ -8,12 +8,15 @@
 
 #include "EnvironmentObject.h"
 
-EnvironmentObject::EnvironmentObject(Vector2f velocity, Vector2f position, Rect<int> boundingBox, Sprite sprite)
+EnvironmentObject::EnvironmentObject(Vector2f position, Texture* texture, Vector2i repeat)
 {
-	this->velocity = velocity;
+	repeat.x *= texture->getSize().x;
+	repeat.y *= texture->getSize().y;
+	this->velocity = Vector2f(0,0);
 	this->position = position;
-	this->boundingBox = boundingBox;
-	this->sprite = sprite;
+	this->boundingBox = IntRect(Vector2i(0,0),repeat);
+	this->sprite = Sprite(*texture, boundingBox);
+;
 }
 
 void EnvironmentObject::update(float deltaTime, std::vector<Entity*> touching)
