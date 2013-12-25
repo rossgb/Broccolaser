@@ -39,6 +39,7 @@ void Game::setup()
 	
 	createEnemy(800,400);
 	
+	
 	if (DEVELOPER)
 	{
 		Font* font = new Font();
@@ -69,7 +70,7 @@ void Game::createPlayer()
 	Player* player = new Player(Vector2f(0,0), texture);
 	if (!DEVELOPER) 
 	{
-		view = View(player->position, (Vector2f)(window->getSize()/2u));
+		//view = View(player->position, (Vector2f)(window->getSize()/2u));
 		camera = new Camera(player, &view);
 	}
 	
@@ -133,18 +134,13 @@ void Game::cleanup()
 void Game::run ()
 {
 	//And then there was time
-	Clock clock;
-	
 	Clock fpsCounter;
+	Clock deltaClock;
 	int framesThisSecond;
 	
 	// Start the game loop
     while (window->isOpen())
     {
-		//Timing stuff
-		float deltaTime = clock.getElapsedTime().asSeconds();
-		clock.restart();
-		
 		if (DEVELOPER)
 		{
 			framesThisSecond++;
@@ -178,23 +174,25 @@ void Game::run ()
 		
 		//draw background before entities
 		window->draw(*background);
-
+		
+		for (Entity* entity : entityList)
+		{
+			std::vector<Entity*> touching = collide(entity);
+			entity->update(deltaClock.getElapsedTime().asSeconds(), touching);
+			window->draw(*entity);
+			touching.clear();
+		}
+		deltaClock.restart();
+		
 		if (!DEVELOPER)
 		{
 			camera->update();
 			window->setView(view);
 		}
-
-		for (Entity* entity : entityList)
-		{
-			std::vector<Entity*> touching = collide(entity);
-			entity->update(deltaTime, touching);
-			window->draw(*entity);
-
-		}
 		
 		if (DEVELOPER)
 		{
+			window->setView(window->getDefaultView());
 			window->draw(fps);
 		}
 		
