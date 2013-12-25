@@ -31,18 +31,20 @@ Player::Player(Vector2f position, Texture* texture) :
 
 void Player::update(float deltaTime, std::vector<Entity*> touching)
 {
+	Entity::update(deltaTime, touching);
+
 	//handle collisions
 	handleCollisions(touching);
+	
 	//handle keyboard input
 	handleKeyboard();
+
 	
 	// /!\ HACK ZONE
 	if (position.y > 800)
 	{
 		position = Vector2f(90,90);
-	}
-			
-	Entity::update(deltaTime, touching);
+	}			
 }
 
 void Player::handleCollisions(std::vector<Entity*> touching)
@@ -50,8 +52,8 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	ground = NULL;
 	inair = true;
 	Rect<int> feet(boundingBox);
-	feet.top += boundingBox.height / 4.0f;
-	feet.height -= boundingBox.height / 4.0f;
+	feet.height = 20;
+	feet.top += boundingBox.height - 20;
 	feet.left += 5;
 	feet.width -= 10;
 	
@@ -64,10 +66,13 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 			ground = entity;
 		}
 	}
-	if (ground != NULL && !UP)
+	if (ground != NULL)
 	{
 		//lock player to the ground
-		position.y = ground->boundingBox.top - boundingBox.height + 1;
+		//if(!UP)
+		{
+			position.y = ground->boundingBox.top - boundingBox.height + 1;
+		}
 	}
 }
 
@@ -88,8 +93,7 @@ void Player::handleKeyboard()
 		sprite.setScale(1,1);
 	}
 	
-	
-	//check collisions
+	inair = (ground == NULL) ? true : false;
 	
 	//airborne specifics
 	accel = (inair) ? accel/5 : accel;
@@ -110,43 +114,46 @@ void Player::handleKeyboard()
 	{
 		velocity.x = 0;
 	}
-	
-	//IF CAN JUMP + UP
-	if (UP)
-	{
-		velocity.y -= jumpVel;
-		if (velocity.y < 0)
-		{
-			inair = true; // if we're going up, then we're in the air
-		}
-	} else
-	{
-		//no jumpy if we've already jumped. If we're on the ground, this will get set to the jump power in the next step
-		jumpVel = 0;
-	}
-	
-	if (!inair)
-	{
-		//if we're on the ground, reset our jump
-		jumpVel = jumpPower;
-		velocity.y = 0;
-	} else {
-		//FALLING
-		jumpVel /=1.1;
-		
-		if (velocity.y < terminalVelocity)
-		{
-			velocity.y += gravity;
-		}
-	}
-	
 	//limit the player's max speed
 	if(velocity.x > speed)
-	{ 
+	{
 		velocity.x = speed;
 	} else if (velocity.x < -speed)
 	{
 		velocity.x = -speed;
+	}
+	
+	//vertical stuff:
+
+	//IF CAN JUMP + UP
+	if (UP)
+	{
+		if (!inair)
+		{
+			position.y -= 1;
+		}
+		velocity.y -= jumpVel;
+	} else
+	{
+		jumpVel = 0;
+	}
+	
+	if (inair)
+	{
+		//fall by gravity
+		velocity.y = (velocity.y > terminalVelocity) ? terminalVelocity : velocity.y + gravity;
+		
+		//reduce jumpvel
+		jumpVel = (jumpVel < 0) ? 0 : jumpVel - 10;
+	} else
+	{
+		//if we're going down, then stop and reset jump
+		//if we're going up, ignore the ground
+		if (velocity.y >= 0)
+		{
+			velocity.y = 0;
+			jumpVel = jumpPower;
+		}
 	}
 }
 

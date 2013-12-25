@@ -130,18 +130,13 @@ void Game::cleanup()
 void Game::run ()
 {
 	//And then there was time
-	Clock clock;
-	
 	Clock fpsCounter;
+	Clock deltaClock;
 	int framesThisSecond;
 	
 	// Start the game loop
     while (window->isOpen())
     {
-		//Timing stuff
-		float deltaTime = clock.getElapsedTime().asSeconds();
-		clock.restart();
-		
 		if (DEVELOPER)
 		{
 			framesThisSecond++;
@@ -178,6 +173,8 @@ void Game::run ()
 		
 		camera->update();
 		window->setView(view);
+		
+		float deltaTime = deltaClock.restart().asSeconds();
 		for (Entity* entity : entityList)
 		{
 			std::vector<Entity*> touching = collide(entity);
@@ -188,6 +185,7 @@ void Game::run ()
 		
 		if (DEVELOPER)
 		{
+			window->setView(window->getDefaultView());
 			window->draw(fps);
 		}
 		
