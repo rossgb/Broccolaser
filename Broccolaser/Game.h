@@ -13,6 +13,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Background.h"
+#include "Camera.h"
 
 using namespace sf;
 
@@ -22,6 +23,7 @@ class Game
 public:
 	RenderWindow* window;
 	
+	
 	Game(RenderWindow* window);
 	void setup();
 	void run();
@@ -30,6 +32,8 @@ private:
 	std::vector<Entity*> entityList;
 	Background* background;
 	Text fps;
+	View view;
+	Camera* camera;
 	
 	std::string resolvePath(std::string);
 	void cleanup();

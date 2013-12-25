@@ -1,7 +1,7 @@
 all: test
 
-test: main.o Game.o Entity.o Background.o Player.o EnvironmentObject.o
-		g++ main.o Entity.o Player.o Background.o Game.o EnvironmentObject.o -o test -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+test: main.o Game.o Entity.o Background.o Player.o EnvironmentObject.o Camera.o
+		g++ main.o Entity.o Player.o Background.o Game.o EnvironmentObject.o Camera.o -o test -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 Game.o: Game.cpp
 	g++ -c --std=c++11 Game.cpp
@@ -20,3 +20,6 @@ main.o: main.cpp
 	
 EnvironmentObject.o: EnvironmentObject.cpp
 	g++ -c --std=c++11 EnvironmentObject.cpp
+
+Camera.o: Camera.cpp
+	g++ -c --std=c++11 Camera.cpp
