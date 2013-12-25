@@ -39,6 +39,7 @@ void Game::setup()
 	
 	createEnemy(800,400);
 	
+	
 	if (DEVELOPER)
 	{
 		Font* font = new Font();
@@ -69,7 +70,7 @@ void Game::createPlayer()
 	Player* player = new Player(Vector2f(0,0), texture);
 	if (!DEVELOPER) 
 	{
-		view = View(player->position, (Vector2f)(window->getSize()/2u));
+		//view = View(player->position, (Vector2f)(window->getSize()/2u));
 		camera = new Camera(player, &view);
 	}
 	
@@ -174,15 +175,14 @@ void Game::run ()
 		//draw background before entities
 		window->draw(*background);
 		
-		float deltaTime = deltaClock.restart().asSeconds();
-
 		for (Entity* entity : entityList)
 		{
 			std::vector<Entity*> touching = collide(entity);
-			entity->update(deltaTime, touching);
+			entity->update(deltaClock.getElapsedTime().asSeconds(), touching);
 			window->draw(*entity);
-
+			touching.clear();
 		}
+		deltaClock.restart();
 		
 		if (!DEVELOPER)
 		{

@@ -26,6 +26,7 @@ public:
 	void update();
 
 private:
+	Vector2f position;
 	Player* player;
 	View* view;
 

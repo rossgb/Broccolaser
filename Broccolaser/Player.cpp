@@ -69,17 +69,18 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	if (ground != NULL)
 	{
 		//lock player to the ground
-		//if(!UP)
+		if(velocity.y >= 0)
 		{
 			position.y = ground->boundingBox.top - boundingBox.height + 1;
 		}
 	}
+	
 }
 
 void Player::handleKeyboard()
 {
 	//physics constants
-	int terminalVelocity = 2300;
+	int terminalVelocity = 1500;
 	int accel = 25;
 	int gravity = 30;
 	int friction = 20;
@@ -151,8 +152,15 @@ void Player::handleKeyboard()
 		//if we're going up, ignore the ground
 		if (velocity.y >= 0)
 		{
-			velocity.y = 0;
+			velocity.y = (velocity.y > 900) ? -200 : 0; // bounce
 			jumpVel = jumpPower;
+		} else
+		{
+			//fall by gravity
+			velocity.y = (velocity.y > terminalVelocity) ? terminalVelocity : velocity.y + gravity;
+			
+			//reduce jumpvel
+			jumpVel = (jumpVel < 0) ? 0 : jumpVel - 10;
 		}
 	}
 }
