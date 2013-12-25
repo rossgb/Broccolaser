@@ -37,6 +37,8 @@ void Game::setup()
 
 	createEnvironment(650, 572, 10, 1);
 	
+	createEnemy(800,400);
+	
 	if (DEVELOPER)
 	{
 		Font* font = new Font();
@@ -59,15 +61,15 @@ std::string Game::resolvePath(std::string str)
 
 void Game::createPlayer()
 {
-	Vector2f velocity(0,0);
-	Vector2f position(0,0);
 	Texture* texture = new Texture();
 	texture->loadFromFile(resolvePath("PlayerSprite.png"));
 	Rect<int> boundingBox(Vector2i(0,0), (Vector2i)texture->getSize());
 	Sprite sprite(*texture, Rect<int>(Vector2i(0,0),(Vector2i)texture->getSize()));
-	Player* player = new Player(velocity, position, boundingBox, sprite);
+
+	Player* player = new Player(Vector2f(90,90), texture);
 	view = View(player->position,Vector2f(500,500));
 	camera = new Camera(player, &view);
+	
 	entityList.push_back(player);
 }
 
@@ -82,17 +84,22 @@ void Game::createBackground()
 
 void Game::createEnvironment(int x, int y, int xrep, int yrep)
 {
-	Vector2f velocity(0,0);
-	Vector2f position(x,y);
 	Texture* texture = new Texture();
 	texture->loadFromFile(resolvePath("platform.jpg"));
-	texture->setRepeated(true);
-	Vector2i size = (Vector2i)texture->getSize();
-	Rect<int> boundingBox(0,0,xrep*size.x,yrep*size.y);
-	Sprite sprite(*texture, boundingBox);
-	EnvironmentObject* obj1 = new EnvironmentObject(velocity, position, boundingBox, sprite);
+
+	EnvironmentObject* obj1 = new EnvironmentObject(Vector2f(x,y), texture, Vector2i(xrep,yrep));
 		
 	entityList.push_back(obj1);
+}
+
+void Game::createEnemy(int x, int y)
+{
+	Texture* texture = new Texture();
+	texture->loadFromFile(resolvePath("derp.png"));
+	
+	Enemy* enemy = new Enemy(Vector2f(x,y), texture);
+	
+	entityList.push_back(enemy);
 }
 
 std::vector<Entity*> Game::collide(Entity * entity)

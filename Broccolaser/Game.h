@@ -14,6 +14,8 @@
 #include "Player.h"
 #include "Background.h"
 #include "Camera.h"
+#include "Enemy.h"
+
 
 using namespace sf;
 
@@ -39,8 +41,9 @@ private:
 	void cleanup();
 	void createPlayer();
 	void createBackground();
+	void createEnemy(int, int);
 	std::vector<Entity*> collide(Entity*);
-	void createEnvironment(int, int,int,int);
+	void createEnvironment(int, int, int, int);
 
 };
 
