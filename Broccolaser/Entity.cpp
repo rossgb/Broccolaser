@@ -22,4 +22,5 @@ void Entity::update(float deltaTime, std::vector<Entity*> touching)
 	sprite.setPosition(position);
 	boundingBox.top = position.y;
 	boundingBox.left = position.x;
+	//std::cout << boundingBox.width << " and " << boundingBox.height << "\n";
 }

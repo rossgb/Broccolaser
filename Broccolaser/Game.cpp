@@ -62,11 +62,11 @@ std::string Game::resolvePath(std::string str)
 void Game::createPlayer()
 {
 	Texture* texture = new Texture();
-	texture->loadFromFile(resolvePath("PlayerSprite.png"));
-	Rect<int> boundingBox(Vector2i(0,0), (Vector2i)texture->getSize());
-	Sprite sprite(*texture, Rect<int>(Vector2i(0,0),(Vector2i)texture->getSize()));
+	texture->loadFromFile(resolvePath("sprites.png"));
+	//Rect<int> boundingBox(Vector2i(0,0), Vector2i(49,89));
+	//Sprite sprite(*texture, Rect<int>(Vector2i(0,0),(Vector2i)texture->getSize()));
 
-	Player* player = new Player(Vector2f(90,90), texture);
+	Player* player = new Player(Vector2f(0,0), texture);
 	if (!DEVELOPER) 
 	{
 		view = View(player->position, (Vector2f)(window->getSize()/2u));
