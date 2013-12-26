@@ -61,8 +61,9 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 			attack2 = true;
 			std::cout << "TEST";
 		}
+		std::cout << attack2<<SPACE<<"\n";
 		if(attack2 == true && !SPACE) {
-			attack2 == false;
+			attack2 = false;
 		}
 
 	}
