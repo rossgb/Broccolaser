@@ -19,7 +19,7 @@
 #include "Game.h"
 #include "EnvironmentObject.h"
 
-#define DEVELOPER false
+#define DEVELOPER true
 
 
 Game::Game(RenderWindow* w)

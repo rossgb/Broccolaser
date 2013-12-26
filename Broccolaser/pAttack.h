@@ -26,7 +26,7 @@ private:
 	Player* player;
 	
 	void handleKeyboard();
-	void handleState(int pos);
+	void attack(int pos);
 
 	
 };

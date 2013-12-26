@@ -78,7 +78,6 @@ void Player::handleState(int pos)
 void Player::handleCollisions(std::vector<Entity*> touching)
 {
 	ground = NULL;
-	inair = true;
 	Rect<int> feet(boundingBox);
 	feet.height = 10;
 	feet.top += boundingBox.height - 10;
@@ -90,7 +89,6 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 		//TODO: ensure entity is something we can land on e.g., an EnvironmentObject
 		if (feet.intersects(entity->boundingBox))
 		{
-			inair = false;
 			ground = entity;
 		}
 	}

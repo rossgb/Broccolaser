@@ -21,7 +21,7 @@ class EnvironmentObject : public Entity
 	
 public:
 	EnvironmentObject(Vector2f position, Texture* texture, Vector2i repeat);
-	EnvironmentObject();
+	~EnvironmentObject();
 		
 private:
 	void update(float deltaTime, std::vector<Entity*> touching);

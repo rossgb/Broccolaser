@@ -37,9 +37,7 @@ private:
 	
 	void handleKeyboard();
 	void handleCollisions(std::vector<Entity*> touching);
-	void handleState(int pos);
-
-	
+	void handleState(int pos);	
 };
 
 #endif /* defined(__Broccolaser__Player__) */

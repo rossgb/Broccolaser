@@ -7,38 +7,36 @@ using namespace sf;
 
 pAttack::pAttack(Player* player, Texture* texture)
 {
-	this->player = player;
-	this->velocity = Vector2f(0,0);
-	this->position = player->position;
-	this->sprite = Sprite(*texture,IntRect(0,0,50,70));
-	this->boundingBox = IntRect(player->position.x+40,player->position+60,50,70);
+	// this->player = player;
+	// this->velocity = Vector2f(0,0);
+	// this->position = player->position;
+	// this->sprite = Sprite(*texture,IntRect(0,0,50,70));
+	// this->boundingBox = IntRect((player->position.x)+40,(player->position.y)+60,50,70);
 }
 
-void pAttack::update(float deltaTime, std:vector<Endtity*> touching)
+void pAttack::update(float deltaTime, std::vector<Entity*> touching)
 {
 	Entity::update(deltaTime, touching);
 
 
-	tateTimer += deltaTime;
-	if (stateTimer >= .1)
-	{
-		stateChange++;
-		stateTimer = 0;
-	}
+	// stateTimer += deltaTime;
+	// if (stateTimer >= .1)
+	// {
+	// 	stateChange++;
+	// 	stateTimer = 0;
+	// }
 
-	if (stateChange >= 4)
-	{
-		stateChange = 0;
-	}
+	// if (stateChange >= 4)
+	// {
+	// 	stateChange = 0;
+	// }
 	
-	attack(stateChange);
+	// attack(stateChange);
 
 
 }
 
-void pAttack:attack(int pos)
+void pAttack::attack(int pos)
 {
-	if(SPACE) 
-
-	}
+	if(SPACE) {}
 }
