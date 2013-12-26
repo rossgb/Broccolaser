@@ -15,12 +15,13 @@
 #define RIGHT Keyboard::isKeyPressed(Keyboard::Right)
 #define UP Keyboard::isKeyPressed(Keyboard::Up)
 #define DOWN Keyboard::isKeyPressed(Keyboard::Down)
+#define SPACE Keyboard::isKeyPressed(Keyboard::Space)
 
 
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250), jumpPower(150), jumpVel(0), ground(NULL), facingLeft(false)
+	speed(250),attack1(false), attack2(false), jumpPower(150), jumpVel(0), ground(NULL), facingLeft(false)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
@@ -45,7 +46,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 
 	//std::cout << facingLeft;
 	stateTimer += deltaTime;
-	if (stateTimer >= .3)
+	if (stateTimer >= maxStateTime)
 	{
 		stateChange++;
 		stateTimer = 0;
@@ -54,6 +55,16 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	if (stateChange >= 4)
 	{
 		stateChange = 0;
+		std::cout << stateChange<<attack1<<attack2<<"\n";
+		if(attack1 == true && attack2 == false) {
+			attack1 = false;
+			attack2 = true;
+			std::cout << "TEST";
+		}
+		if(attack2 == true && !SPACE) {
+			attack2 == false;
+		}
+
 	}
 	//std::cout << stateChange << "\n";
 	handleState(stateChange);
@@ -67,10 +78,20 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 
 void Player::handleState(int pos)
 {
-	if (velocity.y != 0) {
+	
+
+	if (attack1) {
+		state = 6;
+		maxStateTime = .05;
+	} else if (attack2 && SPACE) {
+		state = 8; 
+	} else if (attack2) {
+		state = 10;
+	} else if (velocity.y != 0) {
 		state = 2;
 	} else if (velocity.x != 0) {
 		state = 4;
+		maxStateTime = .3;
 	} else {
 		state = 0;
 	}
@@ -114,6 +135,10 @@ void Player::handleKeyboard()
 	int accel = 25;
 	int gravity = 30;
 	int friction = 20;
+
+	if (SPACE && attack2 == false) {
+		attack1 = true;
+	}
 	
 	//make the player face the direction he's moving
 	//sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);

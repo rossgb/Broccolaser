@@ -157,18 +157,45 @@ void Game::run ()
         Event event;
         while (window->pollEvent(event))
         {
-            // Close window : exit
-            if (event.type == Event::Closed)
-			{
-                window->close();
-            }
+
+        	switch (event.type)
+   			{
+        // window closed
+        		case sf::Event::Closed:
+            	window->close();
+            	break;
+
+        // key pressed
+        		case sf::Event::KeyPressed:
+					if(event.key.code == Keyboard::Escape) {
+						window->close();
+					}
+            	break;
+
+        // we don't process other types of events
+        		default:
+            	break;
+    		}
+
+   //      	if (event.type == sf::Event::KeyPressed)
+			// 	{
+   // 				 if (event.key.code == sf::Keyboard::Space)
+			// 	    {
+				    	
+   //  				}
+			// }
+   //          // Close window : exit
+   //          if (event.type == Event::Closed)
+			// {
+   //              window->close();
+   //          }
 			
-            // Espace pressed : exit
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-			{
-                //open menu
-                window->close();
-            }
+   //          // Espace pressed : exit
+   //          if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+			// {
+   //              //open menu
+   //              window->close();
+   //          }
         }
         // Clear screen
         window->clear(Color(255,255,255,255)); // background color = white

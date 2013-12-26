@@ -28,9 +28,16 @@ private:
 	int state;
 	float stateTimer;
 	int stateChange;
+
+
 	int speed;
 	int jumpPower;
 	int jumpVel;
+
+	bool attack1;
+	bool attack2;
+	float maxStateTime;
+
 	bool inair;
 	bool facingLeft;
 	Entity* ground;
