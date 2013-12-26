@@ -71,7 +71,7 @@ void Game::createPlayer()
 	Player* player = new Player(Vector2f(0,0), texture);
 	if (!DEVELOPER) 
 	{
-		//view = View(player->position, (Vector2f)(window->getSize()/2u));
+		view = View(player->position, (Vector2f)(window->getSize()/2u));
 		camera = new Camera(player, &view);
 	}
 	
