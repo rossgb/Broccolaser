@@ -25,8 +25,8 @@ class Game
 public:
 	RenderWindow* window;
 	
-	
 	Game(RenderWindow* window);
+	~Game();
 	void setup();
 	void run();
 	
@@ -38,7 +38,6 @@ private:
 	Camera* camera;
 	
 	std::string resolvePath(std::string);
-	void cleanup();
 	void createPlayer();
 	void createBackground();
 	void createEnemy(int, int);
