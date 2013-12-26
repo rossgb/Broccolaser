@@ -29,3 +29,7 @@ void EnvironmentObject::update(float deltaTime, std::vector<Entity*> touching)
 	
 	Entity::update(deltaTime, touching);
 }
+
+EnvironmentObject::~EnvironmentObject()
+{
+}
