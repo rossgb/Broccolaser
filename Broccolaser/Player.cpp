@@ -38,7 +38,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	
 	//handle keyboard input
 	handleKeyboard();
-<<<<<<< HEAD
+
 	//std::cout << facingLeft;
 	stateTimer += deltaTime;
 	if (stateTimer >= .3)
@@ -51,11 +51,8 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	{
 		stateChange = 0;
 	}
-	std::cout << stateChange << "\n";
+	//std::cout << stateChange << "\n";
 	handleState(stateChange);
-=======
-
->>>>>>> dbba26cc79e17bd9aaa54d2e05b7dbcad023530c
 	
 	// /!\ HACK ZONE
 	if (position.y > 800)

@@ -15,7 +15,7 @@ void Camera::update()
 	Vector2f velocity(target.x - position.x, target.y - position.y);
 	velocity /= 5.0f;
 	
-	//view->setRotation(position.y); OH GOD
+	//view->setRotation(position.y); //OH GOD
 	
 	position += velocity;
 	
