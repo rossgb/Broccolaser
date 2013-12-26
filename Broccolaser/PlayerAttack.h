@@ -1,6 +1,6 @@
 
-#ifndef __Broccolaser__pAttack__
-#define __Broccolaser__pAttack__
+#ifndef __Broccolaser__PlayerAttack__
+#define __Broccolaser__PlayerAttack__
 
 #include <iostream>
 #include "Entity.h"
@@ -8,13 +8,13 @@
 
 using namespace sf;
 
-class pAttack : public Entity
+class PlayerAttack : public Entity
 {
 	
 	
 public:
-	pAttack(Player* player, Texture* texture);
-	~pAttack();
+	PlayerAttack(Player* player, Texture* texture);
+	~PlayerAttack();
 
 	void update(float deltaTime, std::vector<Entity*> touching);
 
@@ -31,6 +31,6 @@ private:
 	
 };
 
-#endif /* defined(__Broccolaser__pAttack__) */
+#endif /* defined(__Broccolaser__PlayerAttack__) */
 
 

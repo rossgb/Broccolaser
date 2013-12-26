@@ -20,3 +20,7 @@ void Camera::update()
 	
 	view->setCenter(640,400);
 }
+
+Camera::~Camera()
+{
+}

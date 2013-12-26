@@ -123,15 +123,6 @@ std::vector<Entity*> Game::collide(Entity * entity)
 	return touching;
 }
 
-void Game::cleanup()
-{
-	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
-	for (Entity* entity : entityList)
-	{
-		delete entity;
-	}
-}
-
 void Game::run ()
 {
 	//And then there was time
@@ -200,6 +191,15 @@ void Game::run ()
         // Update the window
         window->display();
     }
+}
+
+Game::~Game()
+{
+	for (Entity* entity : entityList)
+	{
+		delete entity;
+	}
+	delete background;
+	delete camera;
 	
-	cleanup();
 }
