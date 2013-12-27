@@ -34,11 +34,13 @@ public:
 	~Player();
 
 	void update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events);
-
-private:
-	int state;
-	float stateTimer;
 	int stateChange;
+	bool facingLeft;
+	int state;
+private:
+	
+	float stateTimer;
+	
 
 
 	int speed;
@@ -49,7 +51,7 @@ private:
 	float maxStateTime;
 
 	bool inair;
-	bool facingLeft;
+	
 	Entity* ground;
 	
 	void handleKeyboard(std::vector<Event> events);

@@ -21,8 +21,6 @@ public:
 private:
 	bool active;
 	int attackNumber;
-	float stateTimer;
-	int stateChange;
 	Player* player;
 	
 	void handleKeyboard();

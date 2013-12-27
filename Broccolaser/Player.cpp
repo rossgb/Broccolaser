@@ -106,6 +106,7 @@ void Player::handleState()
 	if (prevState != state) {
 		stateChange = 0;
 	}
+	std::cout << (75*stateChange) << " " << 75*(0+(int)facingLeft) << "\n";
 	sprite.setTextureRect(IntRect(50*stateChange,90*(state+(int)facingLeft),48,87));
 	
 }
