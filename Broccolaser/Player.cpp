@@ -84,31 +84,29 @@ void Player::handleState(int pos)
 	
 	int prevState = state;
 	if (attack1) {
-		state = 6;
-		maxStateTime = .08;
+
+		state = attacking;
+		maxStateTime = .05;
+
 	} else if (attack2 && SPACE) {
-		state = 8; 
+		state = charging;
 		dashPow += 60;
 		if(dashPow >= 1000) {
 			dashPow = 1000;
 		}
 		//std::cout << dashPow << "\n";
 	} else if (attack2) {
-		state = 10;
-		if (facingLeft) {
-			velocity.x -= dashPow;
-		} else {
-			velocity.x += dashPow;
-		}
-		//velocity.x += (facingLeft) ? -dashPow : dashPow;
+
+		state = dashing;
+		velocity.x += (facingLeft) ? -dashPow : dashPow;
 		dashPow = 0;
 	} else if (velocity.y != 0) {
-		state = 2;
+		state = jumping;
 	} else if (velocity.x != 0) {
-		state = 4;
+		state = walking;
 		maxStateTime = .3;
 	} else {
-		state = 0;
+		state = standing;
 	}
 
 	if (prevState != state) {
