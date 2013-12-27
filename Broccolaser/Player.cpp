@@ -21,7 +21,7 @@
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250),attack1(false), attack2(false), jumpPower(150), jumpVel(0), ground(NULL), facingLeft(false)
+	speed(250),attack1(false), attack2(false), jumpPower(150), dashPow(500), jumpVel(0), ground(NULL), facingLeft(false)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
@@ -52,21 +52,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 		stateTimer = 0;
 	}
 
-	if (stateChange >= 4)
-	{
-		stateChange = 0;
-		std::cout << stateChange<<attack1<<attack2<<"\n";
-		if(attack1 == true && attack2 == false) {
-			attack1 = false;
-			attack2 = true;
-			std::cout << "TEST";
-		}
-		std::cout << attack2<<SPACE<<"\n";
-		if(attack2 == true && !SPACE) {
-			attack2 = false;
-		}
-
-	}
+	
 	//std::cout << stateChange << "\n";
 	handleState(stateChange);
 	
@@ -79,6 +65,22 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 
 void Player::handleState(int pos)
 {
+
+	if (stateChange >= 4)
+	{
+		stateChange = 0;
+		//std::cout << stateChange<<attack1<<attack2<<"\n";
+		if(attack1 == true && attack2 == false) {
+			attack1 = false;
+			attack2 = true;
+			std::cout << "TEST";
+		}
+		//std::cout << attack2<<SPACE<<"\n";
+		if(attack2 == true && !SPACE) {
+			attack2 = false;
+		}
+
+	}
 	
 
 	if (attack1) {
@@ -86,8 +88,15 @@ void Player::handleState(int pos)
 		maxStateTime = .05;
 	} else if (attack2 && SPACE) {
 		state = 8; 
+		dashPow += 60;
+		if(dashPow >= 1000) {
+			dashPow = 1000;
+		}
+		std::cout << dashPow << "\n";
 	} else if (attack2) {
 		state = 10;
+		velocity.x += (facingLeft) ? -dashPow : dashPow;
+		dashPow = 0;
 	} else if (velocity.y != 0) {
 		state = 2;
 	} else if (velocity.x != 0) {
@@ -145,7 +154,6 @@ void Player::handleKeyboard()
 	//sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
 	if(RIGHT) {
 		facingLeft = false;
-		
 	} else if (LEFT) {
 		facingLeft = true;
 	}
@@ -172,7 +180,7 @@ void Player::handleKeyboard()
 		velocity.x = 0;
 	}
 	//limit the player's max speed
-	if(velocity.x > speed)
+	if(velocity.x > speed && state != 10)
 	{
 		velocity.x = speed;
 	} else if (velocity.x < -speed)

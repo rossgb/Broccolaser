@@ -123,6 +123,15 @@ std::vector<Entity*> Game::collide(Entity * entity)
 	return touching;
 }
 
+void Game::cleanup()
+{
+	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
+	for (Entity* entity : entityList)
+	{
+		delete entity;
+	}
+}
+
 void Game::run ()
 {
 	//And then there was time
@@ -149,44 +158,25 @@ void Game::run ()
         while (window->pollEvent(event))
         {
 
-        	switch (event.type)
-   			{
-        // window closed
-        		case sf::Event::Closed:
-            	window->close();
-            	break;
-
-        // key pressed
-        		case sf::Event::KeyPressed:
-					if(event.key.code == Keyboard::Escape) {
-						window->close();
-					}
-            	break;
-
-        // we don't process other types of events
-        		default:
-            	break;
-    		}
-
-   //      	if (event.type == sf::Event::KeyPressed)
-			// 	{
-   // 				 if (event.key.code == sf::Keyboard::Space)
-			// 	    {
+        	if (event.type == sf::Event::KeyPressed)
+				{
+   				 if (event.key.code == sf::Keyboard::Space)
+				    {
 				    	
-   //  				}
-			// }
-   //          // Close window : exit
-   //          if (event.type == Event::Closed)
-			// {
-   //              window->close();
-   //          }
+    				}
+			}
+            // Close window : exit
+            if (event.type == Event::Closed)
+			{
+                window->close();
+            }
 			
-   //          // Espace pressed : exit
-   //          if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-			// {
-   //              //open menu
-   //              window->close();
-   //          }
+            // Espace pressed : exit
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+			{
+                //open menu
+                window->close();
+            }
         }
         // Clear screen
         window->clear(Color(255,255,255,255)); // background color = white
@@ -218,15 +208,6 @@ void Game::run ()
         // Update the window
         window->display();
     }
-}
-
-Game::~Game()
-{
-	for (Entity* entity : entityList)
-	{
-		delete entity;
-	}
-	delete background;
-	delete camera;
 	
+	cleanup();
 }

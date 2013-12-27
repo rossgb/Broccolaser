@@ -43,6 +43,7 @@ private:
 	void createEnemy(int, int);
 	std::vector<Entity*> collide(Entity*);
 	void createEnvironment(int, int, int, int);
+	void cleanup();
 
 };
 

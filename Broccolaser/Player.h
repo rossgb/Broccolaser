@@ -33,6 +33,7 @@ private:
 	int speed;
 	int jumpPower;
 	int jumpVel;
+	int dashPow;
 
 	bool attack1;
 	bool attack2;
