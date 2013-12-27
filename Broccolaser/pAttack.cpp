@@ -1,20 +1,20 @@
-#include "pAttack.h"
+#include "PlayerAttack.h"
 
 #define SPACE Keyboard::isKeyPressed(Keyboard::Space)
 #define SPACEUP Keyboard::isKeyReleased(Keyboard::Space)
 
 using namespace sf;
 
-pAttack::pAttack(Player* player, Texture* texture)
+PlayerAttack::PlayerAttack(Player* player, Texture* texture)
 {
-	// this->player = player;
-	// this->velocity = Vector2f(0,0);
-	// this->position = player->position;
-	// this->sprite = Sprite(*texture,IntRect(0,0,50,70));
-	// this->boundingBox = IntRect((player->position.x)+40,(player->position.y)+60,50,70);
+	this->player = player;
+	this->velocity = Vector2f(0,0);
+	this->position = player->position;
+	this->sprite = Sprite(*texture,IntRect(0,0,50,70));
+	this->boundingBox = IntRect((player->position.x)+40,(player->position.y)+60,50,70);
 }
 
-void pAttack::update(float deltaTime, std::vector<Entity*> touching)
+void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching)
 {
 	Entity::update(deltaTime, touching);
 
@@ -36,7 +36,7 @@ void pAttack::update(float deltaTime, std::vector<Entity*> touching)
 
 }
 
-void pAttack::attack(int pos)
+void PlayerAttack::attack(int pos)
 {
 	if(SPACE) {}
 }

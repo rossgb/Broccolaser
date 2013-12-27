@@ -15,6 +15,7 @@
 #include "Background.h"
 #include "Camera.h"
 #include "Enemy.h"
+#include "PlayerAttack.h"
 
 
 using namespace sf;

@@ -19,32 +19,24 @@ void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::v
 	Entity::update(deltaTime, touching, events);
 
 
-	stateTimer += deltaTime;
-	if (stateTimer >= .1)
-	{
-		stateChange++;
-		stateTimer = 0;
-	}
+	// stateTimer += deltaTime;
+	// if (stateTimer >= .1)
+	// {
+	// 	stateChange++;
+	// 	stateTimer = 0;
+	// }
 
-	if (stateChange >= 4)
-	{
-		stateChange = 0;
-	}
+	// if (stateChange >= 4)
+	// {
+	// 	stateChange = 0;
+	// }
 	
-	attack(stateChange);
+	// attack(stateChange);
 
 
 }
 
 void PlayerAttack::attack(int pos)
 {
-	if(SPACE)
-	{
-		
-	}
-}
-
-PlayerAttack::~PlayerAttack()
-{
-	
+	if(SPACE) {}
 }

@@ -69,12 +69,17 @@ void Game::createPlayer()
 	//Sprite sprite(*texture, Rect<int>(Vector2i(0,0),(Vector2i)texture->getSize()));
 
 	Player* player = new Player(Vector2f(0,0), texture);
+
+	Texture* sword = new Texture();
+	sword->loadFromFile(resolvePath("sword.png"));
+	PlayerAttack* playerAttack = new PlayerAttack(player,sword);
+
 	if (!DEVELOPER) 
 	{
 		view = View(player->position, (Vector2f)(window->getSize()/2u));
 		camera = new Camera(player, &view);
 	}
-	
+	entityList.push_back(playerAttack);
 	entityList.push_back(player);
 }
 

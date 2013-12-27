@@ -95,11 +95,11 @@ void Player::handleState()
 		}
 	}
 	
-	if (state == charging && !SPACE)
-	{
-		//no dash
-		state = standing;
-	}
+	// if (state == charging && !SPACE)
+	// {
+	// 	//no dash
+	// 	state = standing;
+	// }
 	
 	if (prevState != state) {
 		stateChange = 0;
