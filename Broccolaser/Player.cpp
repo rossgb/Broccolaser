@@ -73,7 +73,7 @@ void Player::handleState(int pos)
 		if(attack1 == true && attack2 == false) {
 			attack1 = false;
 			attack2 = true;
-			std::cout << "TEST";
+			//std::cout << "TEST";
 		}
 		//std::cout << attack2<<SPACE<<"\n";
 		if(attack2 == true && !SPACE) {
@@ -82,7 +82,7 @@ void Player::handleState(int pos)
 
 	}
 	
-
+	int prevState = state;
 	if (attack1) {
 		state = 6;
 		maxStateTime = .05;
@@ -92,7 +92,7 @@ void Player::handleState(int pos)
 		if(dashPow >= 1000) {
 			dashPow = 1000;
 		}
-		std::cout << dashPow << "\n";
+		//std::cout << dashPow << "\n";
 	} else if (attack2) {
 		state = 10;
 		velocity.x += (facingLeft) ? -dashPow : dashPow;
@@ -106,6 +106,9 @@ void Player::handleState(int pos)
 		state = 0;
 	}
 
+	if (prevState != state) {
+		stateChange = 0;
+	}
 	sprite.setTextureRect(IntRect(50*pos,90*(state+(int)facingLeft),48,87));
 	
 }
