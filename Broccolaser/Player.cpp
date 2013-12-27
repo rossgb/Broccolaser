@@ -41,6 +41,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	
 	if (ground != NULL)
 	{
+		//moving platforms
 		position += ground->velocity * deltaTime;
 	}
 
@@ -51,7 +52,6 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 		stateTimer = 0;
 	}
 
-	
 	handleState();
 	
 	// /!\ HACK ZONE
@@ -73,7 +73,7 @@ void Player::handleState()
 		stateChange = 0;
 		if (state == attacking)
 		{
-			state = charging;
+			state = (SPACE) ? charging : standing;
 		} else if (state == dashing)
 		{
 			state = jumping;
@@ -93,12 +93,6 @@ void Player::handleState()
 		{
 			state = standing;
 		}
-	}
-	
-	if (state == charging && !SPACE)
-	{
-		//no dash
-		state = standing;
 	}
 	
 	if (prevState != state) {
