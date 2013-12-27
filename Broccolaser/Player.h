@@ -14,6 +14,8 @@
 
 using namespace sf;
 
+//requirement, attacking stuff goes on after 6(attacking)
+//if you want to change that, change the code in Player.cpp handleState()
 enum stateEnum {
 	standing = 0,
 	jumping = 2,
@@ -52,9 +54,9 @@ private:
 	bool facingLeft;
 	Entity* ground;
 	
-	void handleKeyboard();
+	void handleKeyboard(std::vector<Event> events);
 	void handleCollisions(std::vector<Entity*> touching);
-	void handleState(int pos);	
+	void handleState();	
 };
 
 #endif /* defined(__Broccolaser__Player__) */

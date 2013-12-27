@@ -21,7 +21,8 @@
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250),attack1(false), attack2(false), jumpPower(150), dashPow(500), jumpVel(0), ground(NULL), facingLeft(false)
+	speed(250),attack1(false), attack2(false), jumpPower(150), dashPow(700),
+	jumpVel(0), ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
@@ -36,7 +37,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	//handle collisions
 	handleCollisions(touching);	
 	//handle keyboard input
-	handleKeyboard();
+	handleKeyboard(events);
 	
 	if (ground != NULL)
 	{
@@ -51,7 +52,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	}
 
 	
-	handleState(stateChange);
+	handleState();
 	
 	// /!\ HACK ZONE
 	if (position.y > 800)
@@ -60,52 +61,50 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	}
 }
 
-void Player::handleState(int pos)
+void Player::handleState()
 {
+	int prevState = state;
+	
+	maxStateTime = (state < attacking) ? 0.3 : 0.05;
 
-	if (stateChange >= 4)
+	if (stateChange >= 4) // 4 is the amount of frames wide the player is
 	{
+		//do this stuff at end of animations
 		stateChange = 0;
-		if(attack1 == true && attack2 == false) {
-			attack1 = false;
-			attack2 = true;
-		}
-		if(attack2 == true && !SPACE) {
-			attack2 = false;
-		}
-
+		if (state == attacking)
+		{
+			state = charging;
+		} else if (state == dashing)
+		{
+			state = jumping;
+		} 
 	}
 	
-	int prevState = state;
-	if (attack1) {
-
-		state = attacking;
-		maxStateTime = .05;
-
-	} else if (attack2 && SPACE) {
-		state = charging;
-		dashPow += 60;
-		if(dashPow >= 1000) {
-			dashPow = 1000;
+	if (state < attacking)
+	{
+		//no attacking going on, regular logic for animations
+		if (velocity.y != 0)
+		{
+			state = jumping;
+		} else if (velocity.x != 0)
+		{
+			state = walking;
+		} else
+		{
+			state = standing;
 		}
-	} else if (attack2) {
-
-		state = dashing;
-		velocity.x += (facingLeft) ? -dashPow : dashPow;
-		dashPow = 0;
-	} else if (velocity.y != 0) {
-		state = jumping;
-	} else if (velocity.x != 0) {
-		state = walking;
-		maxStateTime = .3;
-	} else {
+	}
+	
+	if (state == charging && !SPACE)
+	{
+		//no dash
 		state = standing;
 	}
-
+	
 	if (prevState != state) {
 		stateChange = 0;
 	}
-	sprite.setTextureRect(IntRect(50*pos,90*(state+(int)facingLeft),48,87));
+	sprite.setTextureRect(IntRect(50*stateChange,90*(state+(int)facingLeft),48,87));
 	
 }
 
@@ -137,7 +136,7 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	
 }
 
-void Player::handleKeyboard()
+void Player::handleKeyboard(std::vector<Event> events)
 {
 	// physics constants
 	int terminalVelocity = 1500;
@@ -145,8 +144,23 @@ void Player::handleKeyboard()
 	int gravity = 30;
 	int friction = 20;
  
-	if (SPACE && attack2 == false) {
-		attack1 = true;
+	for (Event event : events)
+	{
+		if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space && state < attacking)
+		{
+			state = attacking;
+			stateChange = 0;
+		}
+		if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
+		{
+			if (state == charging)
+			{
+				state = dashing;
+				velocity.x += (facingLeft) ? -dashPow : dashPow;
+			}
+
+			stateChange = 0;
+		}
 	}
 	
 	//make the player face the direction he's moving
@@ -163,10 +177,10 @@ void Player::handleKeyboard()
 	friction = (inair) ? friction/5 : friction;
 	
 	//control left and right
-	if (LEFT)
+	if (LEFT && state != dashing)
 	{
 		velocity.x -= accel;
-	} else if (RIGHT)
+	} else if (RIGHT && state != dashing)
 	{
 		velocity.x += accel;
 	} else if (velocity.x > friction || velocity.x < -friction)
@@ -181,7 +195,7 @@ void Player::handleKeyboard()
 	if(velocity.x > speed && state != dashing)
 	{
 		velocity.x = speed;
-	} else if (velocity.x < -speed)
+	} else if (velocity.x < -speed && state != dashing)
 	{
 		velocity.x = -speed;
 	}
