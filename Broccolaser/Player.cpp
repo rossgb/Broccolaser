@@ -153,7 +153,7 @@ void Player::handleKeyboard(std::vector<Event> events)
 		}
 		if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
 		{
-			if (state == charging)
+			if (state != attacking)
 			{
 				state = dashing;
 				velocity.x += (facingLeft) ? -dashPow : dashPow;
