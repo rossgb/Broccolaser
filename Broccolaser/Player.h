@@ -46,8 +46,6 @@ private:
 	int jumpVel;
 	int dashPow;
 
-	bool attack1;
-	bool attack2;
 	float maxStateTime;
 
 	bool inair;

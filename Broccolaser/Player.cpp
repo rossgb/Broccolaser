@@ -21,8 +21,8 @@
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250),attack1(false), attack2(false), jumpPower(150), dashPow(700),
-	jumpVel(0), ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3)
+	speed(250), jumpPower(150), dashPow(700), jumpVel(0),
+	ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
@@ -41,6 +41,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	
 	if (ground != NULL)
 	{
+		//moving platforms
 		position += ground->velocity * deltaTime;
 	}
 
@@ -51,7 +52,6 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 		stateTimer = 0;
 	}
 
-	
 	handleState();
 	
 	// /!\ HACK ZONE
@@ -73,7 +73,7 @@ void Player::handleState()
 		stateChange = 0;
 		if (state == attacking)
 		{
-			state = charging;
+			state = (SPACE) ? charging : standing;
 		} else if (state == dashing)
 		{
 			state = jumping;
@@ -95,12 +95,14 @@ void Player::handleState()
 		}
 	}
 	
+
 	// if (state == charging && !SPACE)
 	// {
 	// 	//no dash
 	// 	state = standing;
 	// }
 	
+
 	if (prevState != state) {
 		stateChange = 0;
 	}
@@ -153,7 +155,7 @@ void Player::handleKeyboard(std::vector<Event> events)
 		}
 		if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
 		{
-			if (state == charging)
+			if (state != attacking)
 			{
 				state = dashing;
 				velocity.x += (facingLeft) ? -dashPow : dashPow;
@@ -177,10 +179,10 @@ void Player::handleKeyboard(std::vector<Event> events)
 	friction = (inair) ? friction/5 : friction;
 	
 	//control left and right
-	if (LEFT && state != dashing)
+	if (LEFT && velocity.x > -speed)
 	{
 		velocity.x -= accel;
-	} else if (RIGHT && state != dashing)
+	} else if (RIGHT && velocity.x < speed)
 	{
 		velocity.x += accel;
 	} else if (velocity.x > friction || velocity.x < -friction)
@@ -190,14 +192,6 @@ void Player::handleKeyboard(std::vector<Event> events)
 	} else
 	{
 		velocity.x = 0;
-	}
-	//limit the player's max speed
-	if(velocity.x > speed && state != dashing)
-	{
-		velocity.x = speed;
-	} else if (velocity.x < -speed && state != dashing)
-	{
-		velocity.x = -speed;
 	}
 	
 	//vertical stuff:
