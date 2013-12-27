@@ -78,8 +78,10 @@ void Player::handleState(int pos)
 	
 	int prevState = state;
 	if (attack1) {
+
 		state = attacking;
 		maxStateTime = .05;
+
 	} else if (attack2 && SPACE) {
 		state = charging;
 		dashPow += 60;
@@ -88,6 +90,7 @@ void Player::handleState(int pos)
 		}
 		//std::cout << dashPow << "\n";
 	} else if (attack2) {
+
 		state = dashing;
 		velocity.x += (facingLeft) ? -dashPow : dashPow;
 		dashPow = 0;
