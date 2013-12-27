@@ -21,8 +21,8 @@
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250),attack1(false), attack2(false), jumpPower(150), dashPow(700),
-	jumpVel(0), ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3)
+	speed(250), jumpPower(150), dashPow(700), jumpVel(0),
+	ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
@@ -177,10 +177,10 @@ void Player::handleKeyboard(std::vector<Event> events)
 	friction = (inair) ? friction/5 : friction;
 	
 	//control left and right
-	if (LEFT && state != dashing)
+	if (LEFT && velocity.x > -speed)
 	{
 		velocity.x -= accel;
-	} else if (RIGHT && state != dashing)
+	} else if (RIGHT && velocity.x < speed)
 	{
 		velocity.x += accel;
 	} else if (velocity.x > friction || velocity.x < -friction)
@@ -190,14 +190,6 @@ void Player::handleKeyboard(std::vector<Event> events)
 	} else
 	{
 		velocity.x = 0;
-	}
-	//limit the player's max speed
-	if(velocity.x > speed && state != dashing)
-	{
-		velocity.x = speed;
-	} else if (velocity.x < -speed && state != dashing)
-	{
-		velocity.x = -speed;
 	}
 	
 	//vertical stuff:
