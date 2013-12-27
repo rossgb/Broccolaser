@@ -27,7 +27,6 @@ Player::Player(Vector2f position, Texture* texture) :
 	this->position = position;
 	this->sprite = Sprite(*texture, IntRect(0,0,48,88));
 	this->boundingBox = IntRect(0,0,48,88);
-	//this->sprite.setOrigin(boundingBox.width/2,0);
 }
 
 void Player::update(float deltaTime, std::vector<Entity*> touching)
@@ -44,7 +43,6 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 		position += ground->velocity * deltaTime;
 	}
 
-	//std::cout << facingLeft;
 	stateTimer += deltaTime;
 	if (stateTimer >= maxStateTime)
 	{
@@ -53,7 +51,6 @@ void Player::update(float deltaTime, std::vector<Entity*> touching)
 	}
 
 	
-	//std::cout << stateChange << "\n";
 	handleState(stateChange);
 	
 	// /!\ HACK ZONE
@@ -69,13 +66,10 @@ void Player::handleState(int pos)
 	if (stateChange >= 4)
 	{
 		stateChange = 0;
-		//std::cout << stateChange<<attack1<<attack2<<"\n";
 		if(attack1 == true && attack2 == false) {
 			attack1 = false;
 			attack2 = true;
-			//std::cout << "TEST";
 		}
-		//std::cout << attack2<<SPACE<<"\n";
 		if(attack2 == true && !SPACE) {
 			attack2 = false;
 		}
@@ -143,26 +137,25 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 
 void Player::handleKeyboard()
 {
-	//physics constants
+	// physics constants
 	int terminalVelocity = 1500;
 	int accel = 25;
 	int gravity = 30;
 	int friction = 20;
-
+ 
 	if (SPACE && attack2 == false) {
 		attack1 = true;
 	}
 	
 	//make the player face the direction he's moving
-	//sprite.setOrigin(boundingBox.left+boundingBox.width/2,boundingBox.top+boundingBox.height/2);
 	if(RIGHT) {
 		facingLeft = false;
 	} else if (LEFT) {
 		facingLeft = true;
 	}
 	
-	inair = (ground == NULL) ? true : false;
-	
+ 	inair = (ground == NULL) ? true : false;
+ 	
 	//airborne specifics
 	accel = (inair) ? accel/5 : accel;
 	friction = (inair) ? friction/5 : friction;
@@ -183,7 +176,7 @@ void Player::handleKeyboard()
 		velocity.x = 0;
 	}
 	//limit the player's max speed
-	if(velocity.x > speed && state != 10)
+	if(velocity.x > speed && state != dashing)
 	{
 		velocity.x = speed;
 	} else if (velocity.x < -speed)
