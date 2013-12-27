@@ -126,10 +126,7 @@ std::vector<Entity*> Game::collide(Entity * entity)
 void Game::cleanup()
 {
 	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
-	for (Entity* entity : entityList)
-	{
-		delete entity;
-	}
+
 }
 
 void Game::run ()
@@ -208,6 +205,14 @@ void Game::run ()
         // Update the window
         window->display();
     }
-	
-	cleanup();
+}
+
+Game::~Game()
+{
+	for (Entity* entity : entityList)
+	{
+		delete entity;
+	}
+	delete camera;
+	delete background;
 }

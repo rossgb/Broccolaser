@@ -14,6 +14,15 @@
 
 using namespace sf;
 
+enum stateEnum {
+	standing = 0,
+	jumping = 2,
+	walking = 4,
+	attacking = 6,
+	charging = 8,
+	dashing = 10
+};
+
 class Player : public Entity
 {
 	
