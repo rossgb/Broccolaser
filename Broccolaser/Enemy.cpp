@@ -18,9 +18,9 @@ Enemy::Enemy(Vector2f position, Texture* texture) :
 	this->boundingBox = IntRect(Vector2i(0,0),(Vector2i)sprite.getTexture()->getSize());
 }
 
-void Enemy::update(float deltaTime, std::vector<Entity *> touching)
+void Enemy::update(float deltaTime, std::vector<Entity *> touching, std::vector<Event> events)
 {
-	Entity::update(deltaTime, touching);
+	Entity::update(deltaTime, touching, events);
 	
 	handleCollisions(touching);
 	

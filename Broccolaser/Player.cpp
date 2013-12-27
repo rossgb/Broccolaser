@@ -29,9 +29,9 @@ Player::Player(Vector2f position, Texture* texture) :
 	this->boundingBox = IntRect(0,0,48,88);
 }
 
-void Player::update(float deltaTime, std::vector<Entity*> touching)
+void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)
 {
-	Entity::update(deltaTime, touching);
+	Entity::update(deltaTime, touching, events);
 
 	//handle collisions
 	handleCollisions(touching);	
@@ -88,7 +88,6 @@ void Player::handleState(int pos)
 		if(dashPow >= 1000) {
 			dashPow = 1000;
 		}
-		//std::cout << dashPow << "\n";
 	} else if (attack2) {
 
 		state = dashing;

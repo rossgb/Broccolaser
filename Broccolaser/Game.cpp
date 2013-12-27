@@ -135,6 +135,7 @@ void Game::run ()
 	Clock fpsCounter;
 	Clock deltaClock;
 	int framesThisSecond;
+	std::vector<Event> events;
 	
 	// Start the game loop
     while (window->isOpen())
@@ -152,23 +153,17 @@ void Game::run ()
 		
         // Process events, if we have too many events here, then we need an event handler class or funciton or something
         Event event;
+		events.clear();
         while (window->pollEvent(event))
         {
-
-        	if (event.type == sf::Event::KeyPressed)
-				{
-   				 if (event.key.code == sf::Keyboard::Space)
-				    {
-				    	
-    				}
-			}
+			events.push_back(event);
             // Close window : exit
             if (event.type == Event::Closed)
 			{
                 window->close();
             }
 			
-            // Espace pressed : exit
+            // Escape pressed : exit
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
 			{
                 //open menu
@@ -184,7 +179,7 @@ void Game::run ()
 		for (Entity* entity : entityList)
 		{
 			std::vector<Entity*> touching = collide(entity);
-			entity->update(deltaClock.getElapsedTime().asSeconds(), touching);
+			entity->update(deltaClock.getElapsedTime().asSeconds(), touching, events);
 			window->draw(*entity);
 			touching.clear();
 		}

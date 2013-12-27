@@ -31,7 +31,7 @@ public:
 	Player(Vector2f position, Texture* texture);
 	~Player();
 
-	void update(float deltaTime, std::vector<Entity*> touching);
+	void update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events);
 
 private:
 	int state;

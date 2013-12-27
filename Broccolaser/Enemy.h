@@ -20,7 +20,7 @@ class Enemy : public Entity
 public:
 	Enemy(Vector2f position, Texture* texture);
 
-	void update(float deltaTime, std::vector<Entity*> touching);
+	void update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events);
 
 private:
 	void think();

@@ -20,14 +20,14 @@ EnvironmentObject::EnvironmentObject(Vector2f position, Texture* texture, Vector
 ;
 }
 
-void EnvironmentObject::update(float deltaTime, std::vector<Entity*> touching)
+void EnvironmentObject::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)
 {
 	//std::cout << this->position.x;
 	//std::cout << this->boundingBox.top << std::endl;
 	//std::cout << this->sprite.getTextureRect().top;
 
 	
-	Entity::update(deltaTime, touching);
+	Entity::update(deltaTime, touching, events);
 }
 
 EnvironmentObject::~EnvironmentObject()

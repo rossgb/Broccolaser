@@ -16,7 +16,7 @@ public:
 	PlayerAttack(Player* player, Texture* texture);
 	~PlayerAttack();
 
-	void update(float deltaTime, std::vector<Entity*> touching);
+	void update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events);
 
 private:
 	bool active;

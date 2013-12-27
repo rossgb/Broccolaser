@@ -14,9 +14,9 @@ PlayerAttack::PlayerAttack(Player* player, Texture* texture)
 	this->boundingBox = IntRect((player->position.x)+40,(player->position.y)+60,50,70);
 }
 
-void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching)
+void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)
 {
-	Entity::update(deltaTime, touching);
+	Entity::update(deltaTime, touching, events);
 
 
 	stateTimer += deltaTime;
