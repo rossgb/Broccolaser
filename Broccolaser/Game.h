@@ -38,6 +38,7 @@ private:
 	View view;
 	Camera* camera;
 	Player* player; // this is in entityList and therfore does not need its own delete
+	Music music;
 	
 	std::string resolvePath(std::string);
 	void createPlayer();
@@ -45,8 +46,6 @@ private:
 	void createEnemy(int, int);
 	std::vector<Entity*> collide(Entity*);
 	void createEnvironment(int, int, int, int);
-	void cleanup();
-
 };
 
 #endif /* defined(__Broccolaser__Game__) */

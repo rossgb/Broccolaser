@@ -10,6 +10,7 @@
 // contains a list of Entities
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <assert.h>
 
 #ifdef __APPLE__
@@ -40,6 +41,9 @@ void Game::setup()
 	
 	createEnemy(800,400);
 	
+    music.openFromFile(resolvePath("voidboxleisureambient.ogg"));
+	music.setLoop(true);
+	music.play();
 	
 	if (DEVELOPER)
 	{
@@ -126,12 +130,6 @@ std::vector<Entity*> Game::collide(Entity * entity)
 		}
 	}
 	return touching;
-}
-
-void Game::cleanup()
-{
-	//maybe this should be in a destructor for Game and called by main.cpp after running the game?
-
 }
 
 void Game::run ()
