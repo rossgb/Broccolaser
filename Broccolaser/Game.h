@@ -16,6 +16,7 @@
 #include "Camera.h"
 #include "Enemy.h"
 #include "PlayerAttack.h"
+#include "EnvironmentObject.h"
 
 
 using namespace sf;

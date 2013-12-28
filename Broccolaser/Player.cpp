@@ -61,6 +61,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	if (position.y > 800)
 	{
 		position = Vector2f(0,0);
+		velocity = Vector2f(0,0);
 	}
 }
 
@@ -178,9 +179,10 @@ void Player::handleKeyboard(std::vector<Event> events, float deltaTime)
 			{
 				state = dashing;
 				velocity.x = (facingLeft) ? -dashPow : dashPow;
+			} else if (state != attacking)
+			{
+				stateChange = 0;
 			}
-
-			stateChange = 0;
 		}
 	}
 	

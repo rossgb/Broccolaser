@@ -18,7 +18,6 @@
 #endif
 
 #include "Game.h"
-#include "EnvironmentObject.h"
 
 #define DEVELOPER true
 
@@ -184,6 +183,7 @@ void Game::run ()
         window->clear(Color(255,255,255,255)); // background color = white
 		
 		window->draw(*background);
+		window->draw(fps);
 		
 		if (cameraOn)
 		{
@@ -202,11 +202,6 @@ void Game::run ()
 			entity->update(deltaTime, touching, events);
 			window->draw(*entity);
 			touching.clear();
-		}
-		
-		if (DEVELOPER)
-		{
-			window->draw(fps);
 		}
 		
         // Update the window
