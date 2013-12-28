@@ -58,7 +58,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	handleState();
 	
 	// /!\ HACK ZONE
-	if (position.y > 800)
+	if (position.y > 8000)
 	{
 		position = Vector2f(0,0);
 		velocity = Vector2f(0,0);

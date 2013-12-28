@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <assert.h>
+#include <fstream>
 
 #ifdef __APPLE__
 #include "ResourcePath.hpp"
@@ -34,9 +35,11 @@ void Game::setup()
 	
 	createBackground();
 	
-	createEnvironment(0, 572, 10, 1);
+	//createEnvironment(0, 572, 10, 1);
 
-	createEnvironment(650, 572, 10, 1);
+	//createEnvironment(650, 572, 10, 1);
+	
+	loadLevel("act1");
 	
 	createEnemy(800,400);
 	
@@ -59,10 +62,34 @@ void Game::setup()
 std::string Game::resolvePath(std::string str)
 {
 #ifdef __APPLE__
+	if (DEVELOPER)
+	{
+		return resourcePath() + "/../../../../../../Broccolaser/" + str;
+	}
 	return resourcePath() + str;
 #else
 	return str;
 #endif
+}
+
+void Game::loadLevel(std::string str)
+{
+	std::ifstream levelFile(resolvePath(str + ".lev"));
+	if (levelFile.is_open())
+	{
+		while(!levelFile.eof())
+		{
+			int x;
+			int y;
+			int xrep;
+			int yrep;
+			levelFile >> x >> y >> xrep >> yrep;
+			std::cout << x << std::endl;
+			std::cout << y << std::endl;
+			createEnvironment(x, y, xrep, yrep);
+		}
+	}
+	levelFile.close();
 }
 
 void Game::createPlayer()
@@ -138,6 +165,12 @@ void Game::run ()
 	int framesThisSecond;
 	std::vector<Event> events;
 	bool cameraOn = false;
+	std::ofstream levelFile;
+	
+	if (DEVELOPER)
+	{
+		levelFile.open(resolvePath("act1.lev"), std::fstream::app);
+	}
 	
 	// Start the game loop
     while (window->isOpen())
@@ -177,6 +210,25 @@ void Game::run ()
                 //toggle camera
 				cameraOn = !cameraOn;
             }
+			if (DEVELOPER)
+			{
+				if (event.type == Event::MouseButtonPressed)
+				{
+					if (event.mouseButton.button == Mouse::Left) {
+						levelFile << " " << event.mouseButton.x << " " << event.mouseButton.y << " 1" << " 1";
+						createEnvironment(event.mouseButton.x, event.mouseButton.y, 1, 1);
+					} else if (event.mouseButton.button == Mouse::Right)
+					{
+						for (int i=0; i < entityList.size(); i++)
+						{
+							Entity* entity = entityList.at(i);
+							if (entity->type == ENVIRONMENTOBJECT && entity->boundingBox.contains(event.mouseButton.x, event.mouseButton.y)) {
+								entity = NULL;
+							}
+						}
+					}
+				}
+			}
         }
 		
         // Clear screen
@@ -207,6 +259,10 @@ void Game::run ()
         // Update the window
         window->display();
     }
+	if (DEVELOPER)
+	{
+		levelFile.close();
+	}
 }
 
 Game::~Game()

@@ -47,6 +47,7 @@ private:
 	void createEnemy(int, int);
 	std::vector<Entity*> collide(Entity*);
 	void createEnvironment(int, int, int, int);
+	void loadLevel(std::string);
 };
 
 #endif /* defined(__Broccolaser__Game__) */
