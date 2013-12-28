@@ -143,6 +143,7 @@ void Game::run ()
 	// Start the game loop
     while (window->isOpen())
     {
+		window->setView(window->getDefaultView());
 		if (DEVELOPER)
 		{
 			framesThisSecond++;
@@ -178,19 +179,11 @@ void Game::run ()
 				cameraOn = !cameraOn;
             }
         }
+		
         // Clear screen
         window->clear(Color(255,255,255,255)); // background color = white
 		
-		//draw background before entities
 		window->draw(*background);
-		float deltaTime = deltaClock.restart().asSeconds();
-		for (Entity* entity : entityList)
-		{
-			std::vector<Entity*> touching = collide(entity);
-			entity->update(deltaTime, touching, events);
-			window->draw(*entity);
-			touching.clear();
-		}
 		
 		if (cameraOn)
 		{
@@ -199,6 +192,16 @@ void Game::run ()
 		} else
 		{
 			window->setView(window->getDefaultView());
+		}
+		
+		//draw background before entities
+		float deltaTime = deltaClock.restart().asSeconds();
+		for (Entity* entity : entityList)
+		{
+			std::vector<Entity*> touching = collide(entity);
+			entity->update(deltaTime, touching, events);
+			window->draw(*entity);
+			touching.clear();
 		}
 		
 		if (DEVELOPER)
