@@ -24,7 +24,7 @@ enum EntityType {
 	COUNT
 	};
 
-class Entity : public sf::Drawable
+class Entity : public Drawable
 {
 	
 public:
@@ -35,6 +35,7 @@ public:
 	Rect<int> boundingBox;
 	Sprite sprite;
 	int type;
+	int state;
 	
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -43,7 +43,10 @@ void Game::setup()
 	
     music.openFromFile(resolvePath("voidboxleisureambient.ogg"));
 	music.setLoop(true);
+	music.setVolume(0.1);
 	music.play();
+	
+	//window->setFramerateLimit(10);
 	
 	if (DEVELOPER)
 	{
@@ -78,13 +81,11 @@ void Game::createPlayer()
 	sword->loadFromFile(resolvePath("sword.png"));
 	PlayerAttack* playerAttack = new PlayerAttack(player,sword);
 
-	if (!DEVELOPER) 
-	{
-		view = View(player->position, (Vector2f)(window->getSize()));
-		camera = new Camera(player, &view);
-	}
-	entityList.push_back(playerAttack);
+	view = View(player->position, (Vector2f)(window->getSize()));
+	camera = new Camera(player, &view);
+	
 	entityList.push_back(player);
+	entityList.push_back(playerAttack);
 }
 
 void Game::createBackground()
@@ -139,6 +140,7 @@ void Game::run ()
 	Clock deltaClock;
 	int framesThisSecond;
 	std::vector<Event> events;
+	bool cameraOn = false;
 	
 	// Start the game loop
     while (window->isOpen())
@@ -172,31 +174,37 @@ void Game::run ()
                 //open menu
                 window->close();
             }
+			if (event.type == Event::KeyPressed && event.key.code == Keyboard::C)
+			{
+                //toggle camera
+				cameraOn = !cameraOn;
+            }
         }
         // Clear screen
         window->clear(Color(255,255,255,255)); // background color = white
 		
 		//draw background before entities
 		window->draw(*background);
-		
+		float deltaTime = deltaClock.restart().asSeconds();
 		for (Entity* entity : entityList)
 		{
 			std::vector<Entity*> touching = collide(entity);
-			entity->update(deltaClock.getElapsedTime().asSeconds(), touching, events);
+			entity->update(deltaTime, touching, events);
 			window->draw(*entity);
 			touching.clear();
 		}
-		deltaClock.restart();
 		
-		if (!DEVELOPER)
+		if (cameraOn)
 		{
 			camera->update();
 			window->setView(view);
+		} else
+		{
+			window->setView(window->getDefaultView());
 		}
 		
 		if (DEVELOPER)
 		{
-			window->setView(window->getDefaultView());
 			window->draw(fps);
 		}
 		
