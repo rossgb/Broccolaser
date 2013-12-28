@@ -33,6 +33,7 @@ private:
 	float jumpPower;
 	bool inair;
 	bool facingLeft;
+	bool jumpWant;
 	Entity* ground;
 	Player* player;
 };

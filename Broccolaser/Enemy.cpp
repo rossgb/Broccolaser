@@ -10,6 +10,8 @@
 #include "PlayerAttack.h"
 #include "math.h"
 
+#define distance(a,b) sqrtf(powf(a.x - b.x,2) + powf(a.y - b.y,2))
+
 Enemy::Enemy(Vector2f position, Texture* texture, Player* player) :
 	jumpPower(50), jumpVel(0), ground(NULL), facingLeft(true)
 {
@@ -72,6 +74,11 @@ void Enemy::handleCollisions(std::vector<Entity *> touching)
 void Enemy::think()
 {
 	//is the player nearby?
+	if (distance(position, player->position) < 300)
+	{
+		//make this guy angry
+	}
+	
 	//are we about to walk off an edge?
 	float middle = position.x + boundingBox.width/2;
 	if (ground != NULL)
