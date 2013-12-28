@@ -84,8 +84,6 @@ void Game::loadLevel(std::string str)
 			int xrep;
 			int yrep;
 			levelFile >> x >> y >> xrep >> yrep;
-			std::cout << x << std::endl;
-			std::cout << y << std::endl;
 			createEnvironment(x, y, xrep, yrep);
 		}
 	}
@@ -125,7 +123,7 @@ void Game::createEnvironment(int x, int y, int xrep, int yrep)
 {
 	Texture* texture = new Texture();
 	texture->loadFromFile(resolvePath("platform.jpg"));
-
+	
 	EnvironmentObject* obj1 = new EnvironmentObject(Vector2f(x,y), texture, Vector2i(xrep,yrep));
 		
 	entityList.push_back(obj1);
@@ -215,17 +213,19 @@ void Game::run ()
 				if (event.type == Event::MouseButtonPressed)
 				{
 					if (event.mouseButton.button == Mouse::Left) {
-						levelFile << " " << event.mouseButton.x << " " << event.mouseButton.y << " 1" << " 1";
-						createEnvironment(event.mouseButton.x, event.mouseButton.y, 1, 1);
+						int x = event.mouseButton.x - (event.mouseButton.x % 50);
+						int y = event.mouseButton.y - (event.mouseButton.y % 50);
+						levelFile << " " << x << " " << y << " 1" << " 1";
+						createEnvironment(x, y, 1, 1);
 					} else if (event.mouseButton.button == Mouse::Right)
 					{
-						for (int i=0; i < entityList.size(); i++)
-						{
-							Entity* entity = entityList.at(i);
-							if (entity->type == ENVIRONMENTOBJECT && entity->boundingBox.contains(event.mouseButton.x, event.mouseButton.y)) {
-								entity = NULL;
-							}
-						}
+//						for (int i=0; i < entityList.size(); i++)
+//						{
+//							Entity* entity = entityList.at(i);
+//							if (entity->type == ENVIRONMENTOBJECT && entity->boundingBox.contains(event.mouseButton.x, event.mouseButton.y)) {
+//								entity = NULL;
+//							}
+//						}
 					}
 				}
 			}

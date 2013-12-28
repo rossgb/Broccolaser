@@ -136,7 +136,6 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 			case ENEMY:
 				if (invulTimer.getElapsedTime().asSeconds() > 0.5) //make this a variable
 				{
-					std::cout << health << std::endl;
 					health--;
 					velocity.x += (position.x > entity->position.x) ? 300 : -300;
 					velocity.y -= 300;
