@@ -46,6 +46,7 @@ void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::v
     	sprite.setTextureRect(IntRect((75*player->stateChange),75*(0+(int)player->facingLeft),75,75));
 		active = true;
     } else {
+		active = true;
     	sprite.setTextureRect(IntRect((75*player->stateChange),75*(2+(int)player->facingLeft),75,75));
     }
 }
