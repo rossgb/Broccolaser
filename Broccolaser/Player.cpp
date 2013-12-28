@@ -130,6 +130,7 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 			case ENVIRONMENTOBJECT:
 				if (feet.intersects(entity->boundingBox))
 				{
+					if (ground != NULL && ground->position.y < entity->position.y) continue;
 					ground = entity;
 				}
 				break;

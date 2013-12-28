@@ -10,6 +10,7 @@
 #define __Broccolaser__Game__
 
 #include <iostream>
+#include <fstream>
 #include "Entity.h"
 #include "Player.h"
 #include "Background.h"
@@ -40,6 +41,8 @@ private:
 	Camera* camera;
 	Player* player; // this is in entityList and therfore does not need its own delete
 	Music music;
+	bool cameraOn;
+	std::ofstream levelFile;
 	
 	std::string resolvePath(std::string);
 	void createPlayer();
@@ -48,6 +51,7 @@ private:
 	std::vector<Entity*> collide(Entity*);
 	void createEnvironment(int, int, int, int);
 	void loadLevel(std::string);
+	void processEvents(std::vector<Event>*);
 };
 
 #endif /* defined(__Broccolaser__Game__) */

@@ -7,7 +7,7 @@ Camera::Camera(Player* player, View* view)
 	this->player = player;
 	this->view = view;
 	this->position = player->position;
-	view->zoom(3.0f);
+	view->zoom(0.7f);
 }
 
 void Camera::update()
