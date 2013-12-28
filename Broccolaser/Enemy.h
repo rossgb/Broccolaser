@@ -26,6 +26,7 @@ public:
 private:
 	void think();
 	void applyPhysics();
+	void die();
 	void handleCollisions(std::vector<Entity *> touching);
 	
 	float jumpVel;

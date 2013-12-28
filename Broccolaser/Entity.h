@@ -18,7 +18,10 @@ enum EntityType {
 	PLAYER,
 	PLAYERATTACK,
 	ENVIRONMENTOBJECT,
-	ENEMY
+	ENEMY,
+	DEADENEMY,
+	
+	COUNT
 	};
 
 class Entity : public sf::Drawable

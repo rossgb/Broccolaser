@@ -7,6 +7,7 @@
 //
 
 #include "Enemy.h"
+#include "PlayerAttack.h"
 #include "math.h"
 
 Enemy::Enemy(Vector2f position, Texture* texture, Player* player) :
@@ -42,11 +43,21 @@ void Enemy::handleCollisions(std::vector<Entity *> touching)
 	
 	for (Entity* entity : touching)
 	{
-		//TODO: ensure entity is something we can land on e.g., an EnvironmentObject
-		if (feet.intersects(entity->boundingBox))
-		{
-			ground = entity;
+		switch (entity->type) {
+			case ENVIRONMENTOBJECT:
+				if (feet.intersects(entity->boundingBox))
+				{
+					ground = entity;
+				}
+				break;
+			case PLAYERATTACK:
+				if (((PlayerAttack*)entity)->active)
+				{
+					die();
+				}
+				break;
 		}
+
 	}
 	if (ground != NULL)
 	{
@@ -82,6 +93,12 @@ void Enemy::think()
 	{
 		velocity.x = 100;
 	}
+}
+
+void Enemy::die()
+{
+	this->type = DEADENEMY;
+	this->sprite = Sprite();
 }
 
 void Enemy::applyPhysics()
