@@ -22,13 +22,14 @@ using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
 	speed(250), jumpPower(150), dashPow(700), jumpVel(0),
-	ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3)
+	ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3), health(10)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
 	this->sprite = Sprite(*texture, IntRect(0,0,48,88));
 	this->boundingBox = IntRect(0,0,48,88);
 	this->type = PLAYER;
+	invulTimer = Clock();
 }
 
 void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)
@@ -128,6 +129,16 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 				if (feet.intersects(entity->boundingBox))
 				{
 					ground = entity;
+				}
+				break;
+			case ENEMY:
+				if (invulTimer.getElapsedTime().asSeconds() > 0.5) //make this a variable
+				{
+					std::cout << health << std::endl;
+					health--;
+					velocity.x += (position.x > entity->position.x) ? 300 : -300;
+					velocity.y -= 300;
+					invulTimer.restart();
 				}
 				break;
 		}

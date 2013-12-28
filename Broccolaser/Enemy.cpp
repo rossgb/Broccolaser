@@ -51,7 +51,7 @@ void Enemy::handleCollisions(std::vector<Entity *> touching)
 				}
 				break;
 			case PLAYERATTACK:
-				if (((PlayerAttack*)entity)->active)
+				if (((PlayerAttack*)entity)->active) // I don't like how this line forces the #include PlayerAttack
 				{
 					die();
 				}

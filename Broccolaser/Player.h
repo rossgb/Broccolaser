@@ -40,17 +40,17 @@ public:
 private:
 	
 	float stateTimer;
+	float maxStateTime;
 	
-
-
 	int speed;
 	int jumpPower;
 	int jumpVel;
 	int dashPow;
-
-	float maxStateTime;
+	int health;
 
 	bool inair;
+	
+	Clock invulTimer;
 	
 	Entity* ground;
 	
