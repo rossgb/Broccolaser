@@ -43,10 +43,8 @@ void Game::setup()
 	
     music.openFromFile(resolvePath("voidboxleisureambient.ogg"));
 	music.setLoop(true);
-	music.setVolume(0.1);
 	music.play();
 	
-	//window->setFramerateLimit(10);
 	
 	if (DEVELOPER)
 	{
