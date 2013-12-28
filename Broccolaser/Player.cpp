@@ -21,7 +21,7 @@
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250), jumpPower(150), dashPow(700), jumpVel(0),
+	speed(250), jumpPower(150), dashPow(700), jumpVel(0), inair(true), stateTimer(0),
 	ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3), health(10)
 {
 	this->velocity = Vector2f(0,0);

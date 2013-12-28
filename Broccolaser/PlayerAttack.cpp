@@ -24,7 +24,7 @@ void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::v
 	} else {	
 		position.x = player->position.x+30;
 	}
-	position.y = player->position.y;
+	position.y = player->position.y+30;
 	// stateTimer += deltaTime;
 	// if (stateTimer >= .1)
 	// {
