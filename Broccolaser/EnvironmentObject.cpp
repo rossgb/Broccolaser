@@ -17,7 +17,7 @@ EnvironmentObject::EnvironmentObject(Vector2f position, Texture* texture, Vector
 	this->position = position;
 	this->boundingBox = IntRect((Vector2i)position,repeat);
 	this->sprite = Sprite(*texture, IntRect(Vector2i(0,0), repeat));
-;
+	this->type = ENVIRONMENTOBJECT;
 }
 
 void EnvironmentObject::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)

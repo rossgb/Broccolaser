@@ -7,7 +7,7 @@ Camera::Camera(Player* player, View* view)
 	this->player = player;
 	this->view = view;
 	this->position = player->position;
-	view->zoom(0.5f);
+	view->zoom(3.0f);
 }
 
 void Camera::update()
@@ -18,7 +18,7 @@ void Camera::update()
 		
 	position += velocity;
 	
-	view->setCenter(640,400);
+	view->setCenter(position);
 }
 
 Camera::~Camera()

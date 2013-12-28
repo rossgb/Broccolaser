@@ -17,9 +17,9 @@ public:
 	~PlayerAttack();
 
 	void update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events);
+	bool active;
 
 private:
-	bool active;
 	int attackNumber;
 	Player* player;
 	

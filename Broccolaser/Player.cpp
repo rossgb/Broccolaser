@@ -21,13 +21,16 @@
 using namespace sf;
 
 Player::Player(Vector2f position, Texture* texture) :
-	speed(250), jumpPower(150), dashPow(700), jumpVel(0),
-	ground(NULL), facingLeft(false), state(jumping), maxStateTime(0.3)
+	speed(250), jumpPower(550), dashPow(700), jumpVel(0), inair(true), stateTimer(0),
+	ground(NULL), facingLeft(false), maxStateTime(0.3), health(10)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
 	this->sprite = Sprite(*texture, IntRect(0,0,48,88));
 	this->boundingBox = IntRect(0,0,48,88);
+	this->type = PLAYER;
+	invulTimer = Clock();
+	this->state = jumping;
 }
 
 void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)
@@ -37,7 +40,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	//handle collisions
 	handleCollisions(touching);	
 	//handle keyboard input
-	handleKeyboard(events);
+	handleKeyboard(events, deltaTime);
 	
 	if (ground != NULL)
 	{
@@ -55,9 +58,10 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	handleState();
 	
 	// /!\ HACK ZONE
-	if (position.y > 800)
+	if (position.y > 8000)
 	{
 		position = Vector2f(0,0);
+		velocity = Vector2f(0,0);
 	}
 }
 
@@ -122,11 +126,24 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	
 	for (Entity* entity : touching)
 	{
-		//TODO: ensure entity is something we can land on e.g., an EnvironmentObject
-		if (feet.intersects(entity->boundingBox))
-		{
-			ground = entity;
+		switch (entity->type) {
+			case ENVIRONMENTOBJECT:
+				if (feet.intersects(entity->boundingBox))
+				{
+					ground = entity;
+				}
+				break;
+			case ENEMY:
+				if (invulTimer.getElapsedTime().asSeconds() > 0.5) //make this a variable
+				{
+					health--;
+					velocity.x += (position.x > entity->position.x) ? 300 : -300;
+					velocity.y -= 300;
+					invulTimer.restart();
+				}
+				break;
 		}
+
 	}
 	if (ground != NULL)
 	{
@@ -139,13 +156,14 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	
 }
 
-void Player::handleKeyboard(std::vector<Event> events)
+void Player::handleKeyboard(std::vector<Event> events, float deltaTime)
 {
 	// physics constants
 	int terminalVelocity = 1500;
-	int accel = 25;
-	int gravity = 30;
-	int friction = 20;
+	float accel = 2500 * deltaTime;
+	float gravity = 3000 * deltaTime;
+	float friction = 2000 * deltaTime;
+	float jumpFriction = 1000 * deltaTime;
  
 	for (Event event : events)
 	{
@@ -156,13 +174,14 @@ void Player::handleKeyboard(std::vector<Event> events)
 		}
 		if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
 		{
-			if (state != attacking)
+			if (state == charging)
 			{
 				state = dashing;
-				velocity.x += (facingLeft) ? -dashPow : dashPow;
+				velocity.x = (facingLeft) ? -dashPow : dashPow;
+			} else if (state != attacking)
+			{
+				stateChange = 0;
 			}
-
-			stateChange = 0;
 		}
 	}
 	
@@ -196,19 +215,6 @@ void Player::handleKeyboard(std::vector<Event> events)
 	}
 	
 	//vertical stuff:
-
-	//IF CAN JUMP + UP
-	if (UP)
-	{
-		if (!inair)
-		{
-			position.y -= 1;
-		}
-		velocity.y -= jumpVel;
-	} else
-	{
-		jumpVel = 0;
-	}
 	
 	if (inair)
 	{
@@ -216,23 +222,38 @@ void Player::handleKeyboard(std::vector<Event> events)
 		velocity.y = (velocity.y > terminalVelocity) ? terminalVelocity : velocity.y + gravity;
 		
 		//reduce jumpvel
-		jumpVel = (jumpVel < 0) ? 0 : jumpVel - 10;
+		jumpVel = (jumpVel < 0) ? 0 : jumpVel - jumpFriction;
 	} else
 	{
 		//if we're going down, then stop and reset jump
-		//if we're going up, ignore the ground
 		if (velocity.y >= 0)
 		{
 			velocity.y = (velocity.y > 900) ? -200 : 0; // bounce
 			jumpVel = jumpPower;
 		} else
 		{
+			//if we're going up, ignore the ground
+
 			//fall by gravity
 			velocity.y = (velocity.y > terminalVelocity) ? terminalVelocity : velocity.y + gravity;
 			
 			//reduce jumpvel
-			jumpVel = (jumpVel < 0) ? 0 : jumpVel - 10;
+			jumpVel = (jumpVel < 0) ? 0 : jumpVel - jumpFriction;
 		}
+	}
+	
+	//IF CAN JUMP + UP
+	if (UP)
+	{
+		if (!inair)
+		{
+			velocity.y = -jumpPower;
+			jumpVel = 1500;
+		}
+		velocity.y -= jumpVel * deltaTime;
+	} else
+	{
+		jumpVel = 0;
 	}
 }
 

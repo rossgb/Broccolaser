@@ -16,7 +16,7 @@ using namespace sf;
 
 //requirement, attacking stuff goes on after 6(attacking)
 //if you want to change that, change the code in Player.cpp handleState()
-enum stateEnum {
+enum playerStateEnum {
 	standing = 0,
 	jumping = 2,
 	walking = 4,
@@ -36,25 +36,25 @@ public:
 	void update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events);
 	int stateChange;
 	bool facingLeft;
-	int state;
 private:
 	
 	float stateTimer;
+	float maxStateTime;
 	
-
-
+	float maxheight;
 	int speed;
 	int jumpPower;
 	int jumpVel;
 	int dashPow;
-
-	float maxStateTime;
+	int health;
 
 	bool inair;
 	
+	Clock invulTimer;
+	
 	Entity* ground;
 	
-	void handleKeyboard(std::vector<Event> events);
+	void handleKeyboard(std::vector<Event> events, float deltaTime);
 	void handleCollisions(std::vector<Entity*> touching);
 	void handleState();	
 };

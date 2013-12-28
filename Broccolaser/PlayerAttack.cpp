@@ -12,6 +12,7 @@ PlayerAttack::PlayerAttack(Player* player, Texture* texture)
 	this->position = player->position;
 	this->sprite = Sprite(*texture,IntRect(50,0,74,74));
 	this->boundingBox = IntRect((player->position.x)+40,(player->position.y)+60,50,70);
+	this->type = PLAYERATTACK;
 }
 
 void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)
@@ -23,7 +24,7 @@ void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::v
 	} else {	
 		position.x = player->position.x+30;
 	}
-	position.y = player->position.y;
+	position.y = player->position.y+30;
 	// stateTimer += deltaTime;
 	// if (stateTimer >= .1)
 	// {
@@ -37,13 +38,15 @@ void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::v
 	// }
 	
 	// attack(stateChange);
-	if (player->state >=0 && player->state <=4 || player->state == 8)
+	if (player->state <= walking || player->state == charging)
 	{
 		sprite.setTextureRect(IntRect((75*player->stateChange),75*(4+(int)player->facingLeft),75,75));
-		//std::cout << (75*player->stateChange) << " " << 75*(4+(int)player->facingLeft) << "\n";
-    } else if (player->state == 6) {
+		active = false;
+    } else if (player->state == attacking) {
     	sprite.setTextureRect(IntRect((75*player->stateChange),75*(0+(int)player->facingLeft),75,75));
+		active = true;
     } else {
+		active = true;
     	sprite.setTextureRect(IntRect((75*player->stateChange),75*(2+(int)player->facingLeft),75,75));
     }
 }

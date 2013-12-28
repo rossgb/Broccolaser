@@ -7,15 +7,20 @@
 //
 
 #include "Enemy.h"
+#include "PlayerAttack.h"
 #include "math.h"
 
-Enemy::Enemy(Vector2f position, Texture* texture) :
+#define distance(a,b) sqrtf(powf(a.x - b.x,2) + powf(a.y - b.y,2))
+
+Enemy::Enemy(Vector2f position, Texture* texture, Player* player) :
 	jumpPower(50), jumpVel(0), ground(NULL), facingLeft(true)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
 	this->sprite = Sprite(*texture, IntRect(Vector2i(0,0), (Vector2i)texture->getSize()));
 	this->boundingBox = IntRect(Vector2i(0,0),(Vector2i)sprite.getTexture()->getSize());
+	this->player = player;
+	this->type = ENEMY;
 }
 
 void Enemy::update(float deltaTime, std::vector<Entity *> touching, std::vector<Event> events)
@@ -40,11 +45,21 @@ void Enemy::handleCollisions(std::vector<Entity *> touching)
 	
 	for (Entity* entity : touching)
 	{
-		//TODO: ensure entity is something we can land on e.g., an EnvironmentObject
-		if (feet.intersects(entity->boundingBox))
-		{
-			ground = entity;
+		switch (entity->type) {
+			case ENVIRONMENTOBJECT:
+				if (feet.intersects(entity->boundingBox))
+				{
+					ground = entity;
+				}
+				break;
+			case PLAYERATTACK:
+				if (((PlayerAttack*)entity)->active) // I don't like how this line forces the #include PlayerAttack
+				{
+					die();
+				}
+				break;
 		}
+
 	}
 	if (ground != NULL)
 	{
@@ -59,6 +74,11 @@ void Enemy::handleCollisions(std::vector<Entity *> touching)
 void Enemy::think()
 {
 	//is the player nearby?
+	if (distance(position, player->position) < 300)
+	{
+		//make this guy angry
+	}
+	
 	//are we about to walk off an edge?
 	float middle = position.x + boundingBox.width/2;
 	if (ground != NULL)
@@ -80,6 +100,12 @@ void Enemy::think()
 	{
 		velocity.x = 100;
 	}
+}
+
+void Enemy::die()
+{
+	this->type = DEADENEMY;
+	this->sprite = Sprite();
 }
 
 void Enemy::applyPhysics()
