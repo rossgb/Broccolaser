@@ -18,7 +18,7 @@ void Camera::update()
 		
 	position += velocity;
 	
-	view->setCenter(640,400);
+	view->setCenter(position);
 }
 
 Camera::~Camera()

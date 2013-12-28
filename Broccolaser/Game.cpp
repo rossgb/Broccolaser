@@ -68,7 +68,7 @@ void Game::createPlayer()
 	//Rect<int> boundingBox(Vector2i(0,0), Vector2i(49,89));
 	//Sprite sprite(*texture, Rect<int>(Vector2i(0,0),(Vector2i)texture->getSize()));
 
-	Player* player = new Player(Vector2f(0,0), texture);
+	player = new Player(Vector2f(0,0), texture);
 
 	Texture* sword = new Texture();
 	sword->loadFromFile(resolvePath("sword.png"));
@@ -76,7 +76,7 @@ void Game::createPlayer()
 
 	if (!DEVELOPER) 
 	{
-		view = View(player->position, (Vector2f)(window->getSize()/2u));
+		view = View(player->position, (Vector2f)(window->getSize()));
 		camera = new Camera(player, &view);
 	}
 	entityList.push_back(playerAttack);
@@ -107,7 +107,7 @@ void Game::createEnemy(int x, int y)
 	Texture* texture = new Texture();
 	texture->loadFromFile(resolvePath("derp.png"));
 	
-	Enemy* enemy = new Enemy(Vector2f(x,y), texture);
+	Enemy* enemy = new Enemy(Vector2f(x,y), texture, player);
 	
 	entityList.push_back(enemy);
 }

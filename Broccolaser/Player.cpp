@@ -28,6 +28,7 @@ Player::Player(Vector2f position, Texture* texture) :
 	this->position = position;
 	this->sprite = Sprite(*texture, IntRect(0,0,48,88));
 	this->boundingBox = IntRect(0,0,48,88);
+	this->type = PLAYER;
 }
 
 void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)
@@ -122,11 +123,15 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 	
 	for (Entity* entity : touching)
 	{
-		//TODO: ensure entity is something we can land on e.g., an EnvironmentObject
-		if (feet.intersects(entity->boundingBox))
-		{
-			ground = entity;
+		switch (entity->type) {
+			case ENVIRONMENTOBJECT:
+				if (feet.intersects(entity->boundingBox))
+				{
+					ground = entity;
+				}
+				break;
 		}
+
 	}
 	if (ground != NULL)
 	{

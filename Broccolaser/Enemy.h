@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "Entity.h"
+#include "Player.h"
 
 using namespace sf;
 
@@ -18,7 +19,7 @@ class Enemy : public Entity
 {
 	
 public:
-	Enemy(Vector2f position, Texture* texture);
+	Enemy(Vector2f position, Texture* texture, Player* player);
 
 	void update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events);
 
@@ -32,6 +33,7 @@ private:
 	bool inair;
 	bool facingLeft;
 	Entity* ground;
+	Player* player;
 };
 
 #endif /* defined(__Broccolaser__Enemy__) */

@@ -12,6 +12,7 @@ PlayerAttack::PlayerAttack(Player* player, Texture* texture)
 	this->position = player->position;
 	this->sprite = Sprite(*texture,IntRect(50,0,74,74));
 	this->boundingBox = IntRect((player->position.x)+40,(player->position.y)+60,50,70);
+	this->type = PLAYERATTACK;
 }
 
 void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)

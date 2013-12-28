@@ -9,13 +9,15 @@
 #include "Enemy.h"
 #include "math.h"
 
-Enemy::Enemy(Vector2f position, Texture* texture) :
+Enemy::Enemy(Vector2f position, Texture* texture, Player* player) :
 	jumpPower(50), jumpVel(0), ground(NULL), facingLeft(true)
 {
 	this->velocity = Vector2f(0,0);
 	this->position = position;
 	this->sprite = Sprite(*texture, IntRect(Vector2i(0,0), (Vector2i)texture->getSize()));
 	this->boundingBox = IntRect(Vector2i(0,0),(Vector2i)sprite.getTexture()->getSize());
+	this->player = player;
+	this->type = ENEMY;
 }
 
 void Enemy::update(float deltaTime, std::vector<Entity *> touching, std::vector<Event> events)

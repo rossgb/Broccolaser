@@ -14,6 +14,13 @@
 
 using namespace sf;
 
+enum EntityType {
+	PLAYER,
+	PLAYERATTACK,
+	ENVIRONMENTOBJECT,
+	ENEMY
+	};
+
 class Entity : public sf::Drawable
 {
 	
@@ -24,6 +31,7 @@ public:
 	Vector2f position;
 	Rect<int> boundingBox;
 	Sprite sprite;
+	int type;
 	
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -37,6 +37,7 @@ private:
 	Text fps;
 	View view;
 	Camera* camera;
+	Player* player; // this is in entityList and therfore does not need its own delete
 	
 	std::string resolvePath(std::string);
 	void createPlayer();
