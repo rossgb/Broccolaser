@@ -37,10 +37,11 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 {
 	Entity::update(deltaTime, touching, events);
 
-	//handle collisions
-	handleCollisions(touching);	
 	//handle keyboard input
 	handleKeyboard(events, deltaTime);
+	//handle collisions
+	handleCollisions(touching);	
+
 	
 	if (ground != NULL)
 	{
