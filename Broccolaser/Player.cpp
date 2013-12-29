@@ -58,7 +58,7 @@ void Player::update(float deltaTime, std::vector<Entity*> touching, std::vector<
 	handleState();
 	
 	// /!\ HACK ZONE
-	if (position.y > 8000)
+	if (position.y > 2000)
 	{
 		position = Vector2f(0,0);
 		velocity = Vector2f(0,0);
@@ -118,11 +118,27 @@ void Player::handleState()
 void Player::handleCollisions(std::vector<Entity*> touching)
 {
 	ground = NULL;
-	Rect<int> feet(boundingBox);
+	IntRect feet(boundingBox);
 	feet.height = 10;
 	feet.top += boundingBox.height - 10;
 	feet.left += 5;
 	feet.width -= 10;
+	
+	IntRect head(boundingBox);
+	head.height = 10;
+	head.left += 5;
+	head.width -= 10;
+
+	IntRect left(boundingBox);
+	left.width = 10;
+	left.height -= 10;
+	left.top += 5;
+	
+	IntRect right(boundingBox);
+	right.width = 10;
+	right.left += boundingBox.width - 10;
+	right.height -= 10;
+	right.top += 5;
 	
 	for (Entity* entity : touching)
 	{
@@ -132,7 +148,31 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 				{
 					if (ground != NULL && ground->position.y < entity->position.y) continue;
 					ground = entity;
+				} else if(head.intersects(entity->boundingBox))
+				{
+					//kill upward velocity
+					if (velocity.y < 0)
+					{
+						velocity.y = 0;
+					}
 				}
+				if (right.intersects(entity->boundingBox))
+				{
+					//kill horizontal velocity
+					if (velocity.x > 0)
+					{
+						velocity.x = 0;
+					}
+				}
+				if (left.intersects(entity->boundingBox))
+				{
+					//kill horizontal velocity
+					if (velocity.x < 0)
+					{
+						velocity.x = 0;
+					}
+				}
+				
 				break;
 			case ENEMY:
 				if (invulTimer.getElapsedTime().asSeconds() > 0.5) //make this a variable
