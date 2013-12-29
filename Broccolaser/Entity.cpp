@@ -17,7 +17,11 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 void Entity::update(float deltaTime, std::vector<Entity*> touching, std::vector<Event> events)
-{	
+{
+	if (deltaTime > 0.2)
+	{
+		deltaTime = 0.2;
+	}
 	position += velocity * deltaTime;
 	sprite.setPosition(position);
 	boundingBox.top = position.y;

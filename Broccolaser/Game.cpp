@@ -12,7 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <assert.h>
-#include <fstream>
+#include <math.h>
 
 #ifdef __APPLE__
 #include "ResourcePath.hpp"
@@ -162,8 +162,7 @@ void Game::run ()
 	Clock deltaClock;
 	int framesThisSecond;
 	std::vector<Event> events;
-	bool cameraOn = false;
-	std::ofstream levelFile;
+	cameraOn = false;
 	
 	if (DEVELOPER)
 	{
@@ -184,53 +183,7 @@ void Game::run ()
 				fpsCounter.restart();
 			}
 		}
-		
-        // Process events, if we have too many events here, then we need an event handler class or funciton or something
-        Event event;
-		events.clear();
-        while (window->pollEvent(event))
-        {
-			events.push_back(event);
-            // Close window : exit
-            if (event.type == Event::Closed)
-			{
-                window->close();
-            }
-			
-            // Escape pressed : exit
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-			{
-                //open menu
-                window->close();
-            }
-			if (event.type == Event::KeyPressed && event.key.code == Keyboard::C)
-			{
-                //toggle camera
-				cameraOn = !cameraOn;
-            }
-			if (DEVELOPER)
-			{
-				if (event.type == Event::MouseButtonPressed)
-				{
-					if (event.mouseButton.button == Mouse::Left) {
-						int x = event.mouseButton.x - (event.mouseButton.x % 50);
-						int y = event.mouseButton.y - (event.mouseButton.y % 50);
-						levelFile << " " << x << " " << y << " 1" << " 1";
-						createEnvironment(x, y, 1, 1);
-					} else if (event.mouseButton.button == Mouse::Right)
-					{
-//						for (int i=0; i < entityList.size(); i++)
-//						{
-//							Entity* entity = entityList.at(i);
-//							if (entity->type == ENVIRONMENTOBJECT && entity->boundingBox.contains(event.mouseButton.x, event.mouseButton.y)) {
-//								entity = NULL;
-//							}
-//						}
-					}
-				}
-			}
-        }
-		
+				
         // Clear screen
         window->clear(Color(255,255,255,255)); // background color = white
 		
@@ -245,6 +198,8 @@ void Game::run ()
 		{
 			window->setView(window->getDefaultView());
 		}
+		
+		processEvents(&events);
 		
 		//draw background before entities
 		float deltaTime = deltaClock.restart().asSeconds();
@@ -262,6 +217,70 @@ void Game::run ()
 	if (DEVELOPER)
 	{
 		levelFile.close();
+	}
+}
+void Game::processEvents(std::vector<Event>* events)
+{
+	// Process events, if we have too many events here, then we need an event handler class or funciton or something
+	Event event;
+	events->clear();
+	while (window->pollEvent(event))
+	{
+		events->push_back(event);
+		// Close window : exit
+		if (event.type == Event::Closed)
+		{
+			window->close();
+		}
+		
+		// Escape pressed : exit
+		if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+		{
+			//open menu
+			window->close();
+		}
+		if (event.type == Event::KeyPressed && event.key.code == Keyboard::C)
+		{
+			//toggle camera
+			cameraOn = !cameraOn;
+		}
+		if (DEVELOPER)
+		{
+			if (event.type == Event::MouseButtonPressed)
+			{
+				if (event.mouseButton.button == Mouse::Left) {
+					int x = event.mouseButton.x;// - (event.mouseButton.x % 50);
+					int y = event.mouseButton.y;// - (event.mouseButton.y % 50);
+					Vector2i viewPos = (Vector2i)window->mapPixelToCoords(Vector2i(x,y));
+					if (viewPos.x > 0)
+					{
+						viewPos.x -= (int)roundf(viewPos.x) % 50;
+					} else
+					{
+						viewPos.x += -50 + std::abs((int)roundf(viewPos.x)) % 50;
+					}
+					if (viewPos.y > 0)
+					{
+						viewPos.y -= (int)roundf(viewPos.y) % 50;
+					} else
+					{
+						viewPos.y += -50 + std::abs((int)roundf(viewPos.y)) % 50;
+					}
+					std::cout << viewPos.x << std::endl;
+					levelFile << " " << viewPos.x << " " << viewPos.y << " 1" << " 1";
+					createEnvironment(viewPos.x, viewPos.y, 1, 1);
+				} else if (event.mouseButton.button == Mouse::Right)
+				{
+					//						for (int i=0; i < entityList.size(); i++)
+					//						{
+					//							Entity* entity = entityList.at(i);
+					//							if (entity->type == ENVIRONMENTOBJECT && entity->boundingBox.contains(event.mouseButton.x, event.mouseButton.y)) {
+					//								entity = NULL;
+					//							}
+					//						}
+				}
+			}
+		}
 	}
 }
 
