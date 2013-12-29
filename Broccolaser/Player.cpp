@@ -160,7 +160,7 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 				if (right.intersects(entity->boundingBox))
 				{
 					//kill horizontal velocity
-					if (velocity.x > 0)
+					if (velocity.x > 0 && entity != ground)
 					{
 						velocity.x = 0;
 					}
@@ -168,7 +168,7 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 				if (left.intersects(entity->boundingBox))
 				{
 					//kill horizontal velocity
-					if (velocity.x < 0)
+					if (velocity.x < 0 && entity != ground)
 					{
 						velocity.x = 0;
 					}
