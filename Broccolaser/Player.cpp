@@ -70,7 +70,7 @@ void Player::handleState()
 {
 	int prevState = state;
 	
-	maxStateTime = (state < attacking) ? 0.3 : 0.1;
+	maxStateTime = (state < attacking) ? 0.3 : 0.08;
 
 	if (stateChange >= 4) // 4 is the amount of frames wide the player is
 	{

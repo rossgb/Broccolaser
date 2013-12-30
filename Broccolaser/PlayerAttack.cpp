@@ -19,12 +19,38 @@ void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::v
 {
 	Entity::update(deltaTime, touching, events);
 
+position.y = player->position.y+30;
 	if(player->facingLeft) {
 		position.x = player->position.x-65;
+		if (player->state == attacking) {
+			if(player->stateChange <= 1) {
+				position.x = player->position.x-10;
+				position.y = player->position.y-20;
+			} else if (player->stateChange == 2) {
+				position.x = player->position.x-55;
+				position.y = player->position.y-20;
+			} else if (player->stateChange == 3) {
+				position.x = player->position.x+-50;
+				position.y = player->position.y+5;
+			}
+	}
+
 	} else {	
 		position.x = player->position.x+30;
+		if (player->state == attacking) {
+			if(player->stateChange <= 1) {
+				position.x = player->position.x-10;
+				position.y = player->position.y-20;
+			} else if (player->stateChange == 2) {
+				position.x = player->position.x+20;
+				position.y = player->position.y-20;
+			} else if (player->stateChange == 3) {
+				position.x = player->position.x+25;
+				position.y = player->position.y+5;
+			}
 	}
-	position.y = player->position.y+30;
+	}
+	
 	// stateTimer += deltaTime;
 	// if (stateTimer >= .1)
 	// {
@@ -38,18 +64,7 @@ void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::v
 	// }
 	
 	// attack(stateChange);
-	if (player->state == attacking) {
-		if(player->stateChange <= 1) {
-			position.x = player->position.x-10;
-			position.y = player->position.y-20;
-		} else if (player->stateChange == 2) {
-			position.x = player->position.x+20;
-			position.y = player->position.y-20;
-		} else if (player->stateChange == 3) {
-			position.x = player->position.x+25;
-			position.y = player->position.y+5;
-		}
-	}
+	
 	if (player->state <= walking || player->state == charging)
 	{
 		sprite.setTextureRect(IntRect((75*player->stateChange),75*(4+(int)player->facingLeft),75,75));
