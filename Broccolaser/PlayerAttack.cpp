@@ -38,6 +38,18 @@ void PlayerAttack::update(float deltaTime, std::vector<Entity*> touching, std::v
 	// }
 	
 	// attack(stateChange);
+	if (player->state == attacking) {
+		if(player->stateChange <= 1) {
+			position.x = player->position.x-10;
+			position.y = player->position.y-20;
+		} else if (player->stateChange == 2) {
+			position.x = player->position.x+20;
+			position.y = player->position.y-20;
+		} else if (player->stateChange == 3) {
+			position.x = player->position.x+25;
+			position.y = player->position.y+5;
+		}
+	}
 	if (player->state <= walking || player->state == charging)
 	{
 		sprite.setTextureRect(IntRect((75*player->stateChange),75*(4+(int)player->facingLeft),75,75));

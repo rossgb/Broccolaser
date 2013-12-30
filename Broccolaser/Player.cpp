@@ -70,7 +70,7 @@ void Player::handleState()
 {
 	int prevState = state;
 	
-	maxStateTime = (state < attacking) ? 0.3 : 0.05;
+	maxStateTime = (state < attacking) ? 0.3 : 0.1;
 
 	if (stateChange >= 4) // 4 is the amount of frames wide the player is
 	{
@@ -132,14 +132,14 @@ void Player::handleCollisions(std::vector<Entity*> touching)
 
 	IntRect left(boundingBox);
 	left.width = 10;
-	left.height -= 10;
-	left.top += 5;
+	left.height -= 20;
+	left.top += 10;
 	
 	IntRect right(boundingBox);
 	right.width = 10;
 	right.left += boundingBox.width - 10;
-	right.height -= 10;
-	right.top += 5;
+	right.height -= 20;
+	right.top += 10;
 	
 	for (Entity* entity : touching)
 	{
